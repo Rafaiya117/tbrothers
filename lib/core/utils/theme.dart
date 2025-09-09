@@ -9,6 +9,7 @@ class FontColors{
   static const disabled_buttonColor = Color(0xFFE6E6E6);
   static const button_color = Color(0xFFFE8641);
   static const background_color = Color(0xFF002D4F);
+  static const icon_color = Color(0xFF0067B5); 
 }
 class AppGradientColors{
   static const background_color = LinearGradient(

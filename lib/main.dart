@@ -1,6 +1,7 @@
 import 'package:appsoleum/config/app_route/app_router.dart';
 import 'package:appsoleum/config/connectvity/no_connectvity.dart';
-import 'package:appsoleum/features/controller/landing_page_controller.dart';
+import 'package:appsoleum/features/landding/controller/landing_page_controller.dart';
+import 'package:appsoleum/features/onboarding_one/controller/onboarding_one_controller.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,6 +48,7 @@ class _MyAppState extends State<MyApp> {
         return MultiProvider(
           providers:[
             ChangeNotifierProvider(create:(_)=>LandingController()),
+            ChangeNotifierProvider(create:(_)=>OnboardingOneController()),
           ],
           child:MaterialApp.router(
             debugShowCheckedModeBanner: false,
