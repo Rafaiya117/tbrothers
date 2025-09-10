@@ -164,8 +164,7 @@ class LandingPage extends StatelessWidget {
                 CustomElevatedButton(
                   text: 'Login',
                   onPressed: () {
-                    // Your action here
-                    print('Button Pressed');
+                   context.push('/login_page');
                   },
                   textColor: Color(0xFFFF8B43),
                   buttonColorStart: Color(0xFF00355E),

@@ -1,23 +1,23 @@
 import 'dart:ui';
-import 'package:appsoleum/core/components/custom_accounttype_card.dart';
+
 import 'package:appsoleum/core/components/custom_button.dart';
 import 'package:appsoleum/core/components/custom_card_widget.dart';
+import 'package:appsoleum/core/components/custom_input_field.dart';
 import 'package:appsoleum/core/components/prograssbar_indigator.dart';
 import 'package:appsoleum/core/utils/theme.dart';
-import 'package:appsoleum/features/onboarding_one/controller/onboarding_one_controller.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-class OnboardingOneView extends StatelessWidget {
-  const OnboardingOneView({super.key});
+class ForgotPasswordView extends StatelessWidget {
+  const ForgotPasswordView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    int _currentPage = 1;
+    int _currentPage = 3;
     int _totalPages = 7;
     return Scaffold(
       backgroundColor:FontColors.background_color,
@@ -56,7 +56,7 @@ class OnboardingOneView extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // 🔙 Back button
+                    //Back button
                     ClipOval(
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
@@ -83,7 +83,7 @@ class OnboardingOneView extends StatelessWidget {
                       ),
                     ),
                    SizedBox(width: 20.w,),
-                    // 📊 Progress Indicator (centered because Row takes full width)
+                    //Progress Indicator (centered because Row takes full width)
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -98,7 +98,7 @@ class OnboardingOneView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // 👻 Placeholder (keeps layout balanced since back button is on left)
+                    // Placeholder (keeps layout balanced since back button is on left)
                     SizedBox(width: 42),
                   ],
                 ),
@@ -118,7 +118,7 @@ class OnboardingOneView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "Create an account",
+                          "Forgot Password",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.playfairDisplay(
                             fontWeight:FontWeight.w600,
@@ -128,7 +128,7 @@ class OnboardingOneView extends StatelessWidget {
                         ),
                         SizedBox(height: 10.h),
                         Text(
-                          "Select an account type to get started.",
+                          "Enter you Email address and we will send you a verify code to reset your password",
                           textAlign: TextAlign.center,
                           style:GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
@@ -137,91 +137,59 @@ class OnboardingOneView extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 20.h,),
-                        Consumer<OnboardingOneController>(
-                          builder: (context, controller, _) =>
-                            CustomAccountOption(
-                              svgIconPath: 'assets/icons/legacy_icon.svg',
-                              title: "Legacy Account",
-                              subtitle: "Live, Preserve, Create.",
-                              iconColor: FontColors.icon_color,
-                              isSelected: controller.selectedIndex == 0,
-                              selectedGradient: const LinearGradient(
-                                colors: [
-                                  Color(0xFFFFF3EC),
-                                  Color(0xFFFFFFFF),
-                                ],
-                                begin: Alignment.topRight,
-                                end: Alignment.bottomLeft,
+                        CustomTextField(
+                          label: "Email",
+                          controller: TextEditingController(),
+                        ),
+                        SizedBox(height: 30.h),
+                        CustomRoundedButton(
+                          text: "Request OTP",
+                          backgroundColor: FontColors.button_color,
+                            textColor: Colors.white,
+                              onPressed: () {
+                                context.push('/verify_otp');
+                              },
+                            ),
+                          SizedBox(height:10.h),
+                          Align(
+                          alignment: Alignment.bottomCenter,
+                          child: RichText(
+                            text: TextSpan(
+                              text: "Back to ",
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.sp,
+                                color: Colors.black,
                               ),
-                              onTap: () => controller.selectIndex(0),
-                            ),
-                          ),
-                        Consumer<OnboardingOneController>(
-                          builder: (context, controller, _) =>
-                            CustomAccountOption(
-                              svgIconPath:'assets/icons/icon_creator_account.svg',
-                              title: "Creator Account",
-                              subtitle: "Live, Preserve, Create.",
-                              iconColor: FontColors.icon_color,
-                              isSelected: controller.selectedIndex == 1,
-                              selectedGradient: const LinearGradient(
-                                colors: [
-                                  Color(0xFFFFF3EC),
-                                  Color(0xFFFFFFFF),
-                                ],
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                            ),
-                            onTap: () => controller.selectIndex(1),
-                          ),
-                        ),
-                        Consumer<OnboardingOneController>(
-                          builder: (context, controller, _) =>
-                            CustomAccountOption(
-                              svgIconPath: 'assets/icons/icon_benificier.svg',
-                              title: "Beneficier Account",
-                              subtitle: "Live, Preserve, Create.",
-                              iconColor: FontColors.icon_color,
-                              isSelected: controller.selectedIndex == 2,
-                              selectedGradient: const LinearGradient(
-                                colors: [
-                                  Color(0xFFFFF3EC),
-                                  Color(0xFFFFFFFF),
-                                ],
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                            ),
-                            onTap: () => controller.selectIndex(2),
-                          ),
-                        ),
-                        SizedBox(height: 30),
-                        Consumer<OnboardingOneController>(
-                          builder: (context, controller, _) =>
-                            CustomRoundedButton(
-                              text: "Continue",
-                              backgroundColor: controller.selectedIndex != -1
-                                ? FontColors.button_color
-                                : FontColors.disabled_buttonColor,
-                              textColor: controller.selectedIndex != -1
-                                ? Colors.white
-                                : FontColors.disable_text,
-                                onPressed: controller.selectedIndex != -1
-                                  ? () {
+                              children: [
+                                TextSpan(
+                                  text: "Log in",
+                                  style: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12.sp,
+                                    color: FontColors.button_color,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      //print("Sign Up clicked");
                                     context.push('/login_page');
-                                  }: null,
+                                  },
                                 ),
-                              ),
-                            SizedBox(height: 15.h,)
-                          ],
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 200.h,)
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        );
-      }
-    }
-  
+        ],
+      ),
+    );
+  }
+}

@@ -9,16 +9,17 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+class ResetPassword extends StatelessWidget {
+  const ResetPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
-    int _currentPage = 2;
-    int _totalPages = 5;
-   return Scaffold(
+    int _currentPage = 4;
+    int _totalPages = 7;
+    return Scaffold(
       backgroundColor:FontColors.background_color,
       body: Stack(
         children: [
@@ -55,7 +56,7 @@ class LoginView extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // 🔙 Back button
+                    //Back button
                     ClipOval(
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
@@ -82,7 +83,7 @@ class LoginView extends StatelessWidget {
                       ),
                     ),
                    SizedBox(width: 20.w,),
-                    // 📊 Progress Indicator (centered because Row takes full width)
+                    //Progress Indicator (centered because Row takes full width)
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -97,7 +98,7 @@ class LoginView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // 👻 Placeholder (keeps layout balanced since back button is on left)
+                    // Placeholder (keeps layout balanced since back button is on left)
                     SizedBox(width: 42),
                   ],
                 ),
@@ -117,7 +118,7 @@ class LoginView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "Log In",
+                          "Reset Password",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.playfairDisplay(
                             fontWeight:FontWeight.w600,
@@ -127,7 +128,7 @@ class LoginView extends StatelessWidget {
                         ),
                         SizedBox(height: 10.h),
                         Text(
-                          "Add details to personalize your acoount",
+                          "Enter your new passowrd below to reset your\n passowrd",
                           textAlign: TextAlign.center,
                           style:GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
@@ -137,11 +138,6 @@ class LoginView extends StatelessWidget {
                         ),
                         SizedBox(height: 20.h,),
                         CustomTextField(
-                          label: "Name",
-                          controller: TextEditingController(),
-                        ),
-                        SizedBox(height: 5.h),
-                        CustomTextField(
                           label: "Password",
                           controller: TextEditingController(),
                           isPassword: true,
@@ -149,50 +145,30 @@ class LoginView extends StatelessWidget {
                           width: 350,
                           borderRadius: 16,
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: (){}, 
-                            child: Text(
-                              "Forgot Password",
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12.sp,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
+                        SizedBox(height: 5.h),
+                        CustomTextField(
+                          label: "Confirm Password",
+                          controller: TextEditingController(),
+                          isPassword: true,
+                          height: 50,
+                          width: 350,
+                          borderRadius: 16,
                         ),
                         SizedBox(height: 20),
                         CustomRoundedButton(
-                          text: "Log in",
+                          text: "Reset Password",
                           backgroundColor: FontColors.button_color,
                             textColor: Colors.white,
                               onPressed: () {
                                 //context.push('/login_page');
                               },
                             ),
-                          SizedBox(height:10.h),
-                          Text(
-                            "or Continue with",
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12.sp,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(height: 10.h),
-                          SvgPicture.asset(
-                            'assets/icons/gmail_icon.svg',
-                            width: 24.w,
-                            height: 24.h,
-                          ),
                           SizedBox(height:20.h),
                           Align(
                           alignment: Alignment.bottomCenter,
                           child: RichText(
                             text: TextSpan(
-                              text: "Don't have an account? ",
+                              text: "Back to ",
                               style: GoogleFonts.inter(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12.sp,
@@ -200,7 +176,7 @@ class LoginView extends StatelessWidget {
                               ),
                               children: [
                                 TextSpan(
-                                  text: "Sign Up",
+                                  text: "Log In",
                                   style: GoogleFonts.inter(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12.sp,
@@ -209,14 +185,15 @@ class LoginView extends StatelessWidget {
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      print("Sign Up clicked");
-                                    },
+                                      //print("Sign Up clicked");
+                                    context.push('/sigup_page');
+                                  },
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(height: 15.h,)
+                        SizedBox(height: 100.h,)
                       ],
                     ),
                   ),

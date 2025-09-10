@@ -1,5 +1,6 @@
 import 'package:appsoleum/config/app_route/app_router.dart';
 import 'package:appsoleum/config/connectvity/no_connectvity.dart';
+import 'package:appsoleum/features/auths/complete_profile/controller/profile_image_upload_controller.dart';
 import 'package:appsoleum/features/landding/controller/landing_page_controller.dart';
 import 'package:appsoleum/features/onboarding_one/controller/onboarding_one_controller.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -49,6 +50,7 @@ class _MyAppState extends State<MyApp> {
           providers:[
             ChangeNotifierProvider(create:(_)=>LandingController()),
             ChangeNotifierProvider(create:(_)=>OnboardingOneController()),
+            ChangeNotifierProvider(create: (_)=>ProfileImageUploadController()),
           ],
           child:MaterialApp.router(
             debugShowCheckedModeBanner: false,

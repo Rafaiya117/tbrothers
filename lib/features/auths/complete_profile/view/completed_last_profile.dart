@@ -1,23 +1,19 @@
 import 'dart:ui';
-
 import 'package:appsoleum/core/components/custom_button.dart';
 import 'package:appsoleum/core/components/custom_card_widget.dart';
-import 'package:appsoleum/core/components/custom_input_field.dart';
 import 'package:appsoleum/core/components/prograssbar_indigator.dart';
 import 'package:appsoleum/core/utils/theme.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignupView extends StatelessWidget {
-  const SignupView({super.key});
+class CompletedLastProfile extends StatelessWidget {
+  const CompletedLastProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    int _currentPage = 3;
+    int _currentPage = 4;
     int _totalPages = 7;
     return Scaffold(
       backgroundColor:FontColors.background_color,
@@ -56,7 +52,7 @@ class SignupView extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // 🔙 Back button
+                    //Back button
                     ClipOval(
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
@@ -83,7 +79,7 @@ class SignupView extends StatelessWidget {
                       ),
                     ),
                    SizedBox(width: 20.w,),
-                    // 📊 Progress Indicator (centered because Row takes full width)
+                    //Progress Indicator (centered because Row takes full width)
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -98,6 +94,7 @@ class SignupView extends StatelessWidget {
                         ],
                       ),
                     ),
+                    // Placeholder (keeps layout balanced since back button is on left)
                     SizedBox(width: 42),
                   ],
                 ),
@@ -117,7 +114,7 @@ class SignupView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "Create account",
+                          "Your profile is ready",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.playfairDisplay(
                             fontWeight:FontWeight.w600,
@@ -127,7 +124,7 @@ class SignupView extends StatelessWidget {
                         ),
                         SizedBox(height: 10.h),
                         Text(
-                          "Add details to personalize your acoount",
+                          "Thanks for setting up your account\n Enjoy exploring Appsoleum",
                           textAlign: TextAlign.center,
                           style:GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
@@ -136,86 +133,15 @@ class SignupView extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 20.h,),
-                        CustomTextField(
-                          label: "Name",
-                          controller: TextEditingController(),
-                        ),
-                        CustomTextField(
-                          label: "Email",
-                          controller: TextEditingController(),
-                        ),
-                        SizedBox(height: 5.h),
-                        CustomTextField(
-                          label: "Password",
-                          controller: TextEditingController(),
-                          isPassword: true,
-                          height: 50,
-                          width: 350,
-                          borderRadius: 16,
-                        ),
-                        SizedBox(height: 5.h),
-                        CustomTextField(
-                          label: "Confirm Password",
-                          controller: TextEditingController(),
-                          isPassword: true,
-                          height: 50,
-                          width: 350,
-                          borderRadius: 16,
-                        ),
-                        SizedBox(height: 20),
                         CustomRoundedButton(
-                          text: "Sign Up",
-                          backgroundColor: FontColors.button_color,
-                            textColor: Colors.white,
-                              onPressed: () {
-                                context.push('/complete_profile');
-                              },
-                            ),
-                          SizedBox(height:10.h),
-                          Text(
-                            "or Continue with",
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12.sp,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(height: 10.h),
-                          SvgPicture.asset(
-                            'assets/icons/gmail_icon.svg',
-                            width: 24.w,
-                            height: 24.h,
-                          ),
-                          SizedBox(height:20.h),
-                          Align(
-                          alignment: Alignment.bottomCenter,
-                          child: RichText(
-                            text: TextSpan(
-                              text: "Don't have an account? ",
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12.sp,
-                                color: Colors.black,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: "Sign In",
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12.sp,
-                                    color: FontColors.button_color,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      print("Sign Up clicked");
-                                    },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15.h,)
+                          text: "Start Exploring",
+                          backgroundColor:FontColors.button_color,
+                          textColor:Colors.white,
+                          onPressed: () {
+                            //context.push('/last_completed');
+                          },
+                        ),                         
+                        SizedBox(height: 20.h,)
                       ],
                     ),
                   ),

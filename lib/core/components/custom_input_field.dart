@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -6,7 +8,7 @@ class CustomTextField extends StatelessWidget {
   final bool isPassword;
   final double height, width, paddingTop, paddingRight, paddingBottom, paddingLeft, gap, borderRadius;
 
-  // Add this
+  //!-------------for stateless value setState------------!
   final ValueNotifier<bool> _obscureText;
 
   CustomTextField({
@@ -15,8 +17,8 @@ class CustomTextField extends StatelessWidget {
     this.isPassword = false,
     this.height = 48.0,
     this.width = 400.0,
-    this.paddingTop = 14.0,
-    this.paddingRight = 16.0,
+    this.paddingTop = 8.0,
+    this.paddingRight = 8.0,
     this.paddingBottom = 14.0,
     this.paddingLeft = 16.0,
     this.gap = 10.0,
@@ -35,7 +37,12 @@ class CustomTextField extends StatelessWidget {
             padding: EdgeInsets.only(bottom: gap),
             child: Text(
               label,
-              style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6)),
+              // ignore: deprecated_member_use
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,
+                color: Color(0xFF2F4A58),
+              ),
             ),
           ),
           ValueListenableBuilder<bool>(
@@ -53,7 +60,7 @@ class CustomTextField extends StatelessWidget {
                   controller: controller,
                   obscureText: obscure,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.zero,
+                    //contentPadding: EdgeInsets.zero,
                     border: InputBorder.none,
                     suffixIcon: isPassword
                         ? IconButton(
@@ -62,10 +69,14 @@ class CustomTextField extends StatelessWidget {
                               color: Colors.grey,
                             ),
                             onPressed: () {
-                              _obscureText.value = !obscure; // toggle
+                              _obscureText.value = !obscure;
                             },
                           )
                         : null,
+                    suffixIconConstraints: BoxConstraints(
+                      minHeight: height,
+                      minWidth: 40,
+                    ),
                   ),
                 ),
               );
