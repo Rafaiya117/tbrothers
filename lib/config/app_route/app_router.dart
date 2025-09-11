@@ -1,3 +1,4 @@
+import 'package:appsoleum/features/auths/capture_image/view/capture_image.dart';
 import 'package:appsoleum/features/auths/complete_profile/view/complete_profile_view.dart';
 import 'package:appsoleum/features/auths/complete_profile/view/completed_last_profile.dart';
 import 'package:appsoleum/features/auths/complete_profile/view/profile_image_upload.dart';
@@ -62,6 +63,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/home_page',
       builder: (context, state) => HomePageView(),
+    ),
+    GoRoute(
+      path: '/capture_image',
+      builder: (context, state) => CaptureImage(),
     ),
   ],
 );
