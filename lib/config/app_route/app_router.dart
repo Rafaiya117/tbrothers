@@ -1,4 +1,5 @@
-import 'package:appsoleum/features/auths/capture_image/view/capture_image.dart';
+import 'package:appsoleum/features/capture_image/view/capture_image.dart';
+import 'package:appsoleum/features/capture_image/view/record_audio.dart';
 import 'package:appsoleum/features/auths/complete_profile/view/complete_profile_view.dart';
 import 'package:appsoleum/features/auths/complete_profile/view/completed_last_profile.dart';
 import 'package:appsoleum/features/auths/complete_profile/view/profile_image_upload.dart';
@@ -8,6 +9,7 @@ import 'package:appsoleum/features/auths/login/view/login_view.dart';
 import 'package:appsoleum/features/auths/reset_password/view/reset_password.dart';
 import 'package:appsoleum/features/auths/signup/view/signup_view.dart';
 import 'package:appsoleum/features/auths/verify_otp/view/verify_otp.dart';
+import 'package:appsoleum/features/create_capsule/view/create_capsule_view.dart';
 import 'package:appsoleum/features/home_page/view/home_page_view.dart';
 import 'package:appsoleum/features/landding/view/landing_page.dart';
 import 'package:appsoleum/features/onboarding_one/view/onboarding_one_view.dart';
@@ -67,6 +69,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/capture_image',
       builder: (context, state) => CaptureImage(),
+    ),
+    GoRoute(
+      path: '/record_audio',
+      builder: (context, state) => RecordAudio(),
+    ),
+    GoRoute(
+      path: '/create_capsule',
+      builder: (context, state) => CreateCapsuleView(),
     ),
   ],
 );

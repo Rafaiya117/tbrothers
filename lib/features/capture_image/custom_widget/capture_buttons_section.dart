@@ -1,4 +1,7 @@
+import 'package:appsoleum/core/utils/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CameraControlBar extends StatelessWidget {
   final VoidCallback? onGalleryTap;
@@ -20,33 +23,34 @@ class CameraControlBar extends StatelessWidget {
         // Gallery icon
         IconButton(
           onPressed: onGalleryTap,
-          icon: Icon(
-            Icons.photo_outlined,
-            color: Colors.white,
-            size: 24,
+          icon: SvgPicture.asset(
+            'assets/icons/gallary_icon.svg',
+            width: 16.67.w,
+            height: 15.h,
           ),
         ),
-
-        // Capture button with double ring gradient border
         GestureDetector(
           onTap: onCaptureTap,
           child: Container(
-            width: 70,
-            height: 70,
+            width: 45.w,
+            height: 58.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [Color(0xFFFFB76B), Color(0xFFFF7B43)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: FontColors.background_color,
+              border: Border.all(color: Color(0xFFFFD9C4))
+              // gradient: LinearGradient(
+              //   colors: [Color(0xFFFFB76B), Color(0xFFFF7B43)],
+              //   begin: Alignment.topLeft,
+              //   end: Alignment.bottomRight,
+              // ),
             ),
             child: Center(
               child: Container(
-                width: 58,
-                height: 58,
+                width: 28,
+                height: 28,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFF7B43),
+                  //color: Color(0xFFFF7B43),
+                  gradient: AppGradientColors.linear_button,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -57,10 +61,10 @@ class CameraControlBar extends StatelessWidget {
         // Flash off icon
         IconButton(
           onPressed: onFlashTap,
-          icon: Icon(
-            Icons.flash_off,
-            color: Colors.white,
-            size: 24,
+          icon: SvgPicture.asset(
+            'assets/icons/flash_icon.svg',
+            width: 16.67.w,
+            height: 15.h,
           ),
         ),
       ],

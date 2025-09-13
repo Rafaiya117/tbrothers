@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool isPassword;
   final double height, width, paddingTop, paddingRight, paddingBottom, paddingLeft, gap, borderRadius;
+  final Color backgroundColor;
 
   //!-------------for stateless value setState------------!
   final ValueNotifier<bool> _obscureText;
@@ -23,6 +24,7 @@ class CustomTextField extends StatelessWidget {
     this.paddingLeft = 16.0,
     this.gap = 10.0,
     this.borderRadius = 12.0,
+    this.backgroundColor = const Color(0xFFF2F2F2), 
   }) : _obscureText = ValueNotifier<bool>(isPassword);
 
   @override
@@ -32,16 +34,14 @@ class CustomTextField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Label
           Padding(
             padding: EdgeInsets.only(bottom: gap),
             child: Text(
               label,
-              // ignore: deprecated_member_use
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w500,
                 fontSize: 14.sp,
-                color: Color(0xFF2F4A58),
+                color: const Color(0xFF2F4A58),
               ),
             ),
           ),
@@ -54,13 +54,12 @@ class CustomTextField extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(paddingLeft, paddingTop, paddingRight, paddingBottom),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(borderRadius),
-                  color: Color(0xFFF2F2F2),
+                  color: backgroundColor,
                 ),
                 child: TextField(
                   controller: controller,
                   obscureText: obscure,
                   decoration: InputDecoration(
-                    //contentPadding: EdgeInsets.zero,
                     border: InputBorder.none,
                     suffixIcon: isPassword
                         ? IconButton(

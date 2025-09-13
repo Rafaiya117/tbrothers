@@ -12,13 +12,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HomePageView extends StatelessWidget {
-  const HomePageView({super.key});
+const HomePageView({super.key});
 
   @override
   Widget build(BuildContext context) {
  final memoryItems = context.watch<HomePageController>().memoryItems;
  final controller = context.watch<HomePageController>();
- int index = 0;
     return Scaffold(
       body:SingleChildScrollView(
         child: Container(
@@ -104,7 +103,9 @@ class HomePageView extends StatelessWidget {
                     CustomActionButton(
                       icon: SvgPicture.asset('assets/icons/micro_phone.svg'),
                       label: 'Record Message', 
-                      onTap: () {  },
+                      onTap: () {
+                        context.push('/record_audio');
+                      },
                     ),
                     SizedBox(width:5.w),
                     CustomActionButton(
@@ -117,7 +118,8 @@ class HomePageView extends StatelessWidget {
                       icon: SvgPicture.asset('assets/icons/create_capsule.svg'),
                       label: 'Create Capsule', 
                       onTap: () {
-                        context.push('/capture_image');
+                        context.push('/create_capsule');
+                        //context.push('/capture_image');
                       },
                     ),
                   ],
