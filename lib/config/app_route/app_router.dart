@@ -9,7 +9,10 @@ import 'package:appsoleum/features/auths/login/view/login_view.dart';
 import 'package:appsoleum/features/auths/reset_password/view/reset_password.dart';
 import 'package:appsoleum/features/auths/signup/view/signup_view.dart';
 import 'package:appsoleum/features/auths/verify_otp/view/verify_otp.dart';
-import 'package:appsoleum/features/create_capsule/view/create_capsule_view.dart';
+import 'package:appsoleum/features/create_capsule/view/create_capsule_add_date.dart';
+import 'package:appsoleum/features/create_capsule/view/create_capsule_final_view.dart';
+import 'package:appsoleum/features/create_capsule/view/create_capsule_note_view.dart';
+import 'package:appsoleum/features/create_capsule/view/create_capsule__image_view.dart';
 import 'package:appsoleum/features/home_page/view/home_page_view.dart';
 import 'package:appsoleum/features/landding/view/landing_page.dart';
 import 'package:appsoleum/features/onboarding_one/view/onboarding_one_view.dart';
@@ -76,7 +79,19 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/create_capsule',
-      builder: (context, state) => CreateCapsuleView(),
+      builder: (context, state) => CreateCapsuleImageView(),
+    ),
+    GoRoute(
+      path: '/create_capsule_addnote',
+      builder: (context, state) => CreateCapsuleNoteView(),
+    ),
+    GoRoute(
+      path: '/create_capsule_add_date',
+      builder: (context, state) => CreateCapsuleAddDate(),
+    ),
+    GoRoute(
+      path: '/capsule_final_view',
+      builder: (context, state) => CreateCapsuleFinalView(),
     ),
   ],
 );

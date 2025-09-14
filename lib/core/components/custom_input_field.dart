@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
+  final String? hintText;
+  final Color? label_text_color;
+  final Color? input_text_color;
   final TextEditingController controller;
   final bool isPassword;
   final double height, width, paddingTop, paddingRight, paddingBottom, paddingLeft, gap, borderRadius;
@@ -14,6 +17,9 @@ class CustomTextField extends StatelessWidget {
 
   CustomTextField({
     required this.label,
+    this.hintText,
+    this.label_text_color =const Color(0xFF2F4A58),
+    this.input_text_color = const Color(0xFF2F4A58),
     required this.controller,
     this.isPassword = false,
     this.height = 48.0,
@@ -41,7 +47,7 @@ class CustomTextField extends StatelessWidget {
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w500,
                 fontSize: 14.sp,
-                color: const Color(0xFF2F4A58),
+                color: label_text_color,
               ),
             ),
           ),
@@ -60,23 +66,34 @@ class CustomTextField extends StatelessWidget {
                   controller: controller,
                   obscureText: obscure,
                   decoration: InputDecoration(
+                    hintText: hintText,
+                    hintStyle: GoogleFonts.inter(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 14.sp,
+                      color: Color(0xFFFFFFFF),
+                    ),
                     border: InputBorder.none,
                     suffixIcon: isPassword
-                        ? IconButton(
-                            icon: Icon(
-                              obscure ? Icons.visibility_off : Icons.visibility,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
-                              _obscureText.value = !obscure;
-                            },
-                          )
-                        : null,
+                      ? IconButton(
+                        icon: Icon(
+                          obscure ? Icons.visibility_off : Icons.visibility,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          _obscureText.value = !obscure;
+                        },
+                      ): null,
                     suffixIconConstraints: BoxConstraints(
                       minHeight: height,
                       minWidth: 40,
                     ),
                   ),
+                  style: GoogleFonts.inter(
+                    color:input_text_color,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 12.sp,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               );
             },
