@@ -4,6 +4,8 @@ import 'package:appsoleum/features/capture_image/controller/audio_recording_cont
 import 'package:appsoleum/features/capture_image/controller/capture_controller.dart';
 import 'package:appsoleum/features/auths/complete_profile/controller/profile_image_upload_controller.dart';
 import 'package:appsoleum/features/create_capsule/controller/capsule_controller.dart';
+import 'package:appsoleum/features/gallary_and_timeline/controller/gallary_and_timeline_controller.dart';
+import 'package:appsoleum/features/gallary_and_timeline/controller/timeline_video.dart';
 import 'package:appsoleum/features/home_page/controller/home_page_controller.dart';
 import 'package:appsoleum/features/landding/controller/landing_page_controller.dart';
 import 'package:appsoleum/features/onboarding_one/controller/onboarding_one_controller.dart';
@@ -59,6 +61,8 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_) => CaptureController()),
             ChangeNotifierProvider(create: (_) => RecordingController()),
             ChangeNotifierProvider(create: (_) => CapsuleController()),
+            ChangeNotifierProvider(create: (_)=>GalleryTimelineController()),
+            ChangeNotifierProvider(create: (_)=>TimelineVideoController()),
           ],
           child:MaterialApp.router(
             debugShowCheckedModeBanner: false,

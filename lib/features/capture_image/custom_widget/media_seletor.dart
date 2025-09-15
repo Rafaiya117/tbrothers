@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/capture_image/controller/capture_controller.dart';
 import 'package:flutter/material.dart';

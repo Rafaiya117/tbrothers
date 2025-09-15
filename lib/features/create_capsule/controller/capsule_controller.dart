@@ -76,11 +76,10 @@ class CapsuleController extends ChangeNotifier {
     notifyListeners();
   }
 
-  DateTime _selectedday = DateTime(2026, 12, 31); 
-  DateTime _startdate = DateTime(2026, 12, 01);   
+  DateTime _selectedday = DateTime(2025, 09, 17); 
+  DateTime _startdate = DateTime(2025, 09, 15);   
 
-
-  final DateTime simulatedNow = DateTime(2026, 12, 12);
+  final DateTime simulatedNow = DateTime(2025, 09, 15);
 
   //!---------- Day Progress Based on Days Passed ----------!
   double get dayProgress {
@@ -99,8 +98,14 @@ class CapsuleController extends ChangeNotifier {
     return target.difference(simulatedNow).inDays;
   }
 
+  //!---------- Full Time Remaining ----------!
+Duration get timeRemaining {
+  return _selectedday.difference(simulatedNow);
+}
+
+
   //!---------- Circular Progress (Time in Day) ----------!
-  double _progressValue = 0.0;
+  double _progressValue = 0.2;
   double get progressValue => _progressValue;
 
   void updateProgress() {

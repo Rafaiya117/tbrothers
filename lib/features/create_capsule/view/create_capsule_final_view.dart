@@ -1,6 +1,7 @@
 import 'package:appsoleum/core/components/custom_button.dart';
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/create_capsule/controller/capsule_controller.dart';
+import 'package:appsoleum/features/create_capsule/custom_widget/alert_dialouge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -114,13 +115,14 @@ class CreateCapsuleFinalView extends StatelessWidget {
                   ),
                 ),
               ),
-              //SizedBox(height: 10.h),
+              SizedBox(height: 10.h),
               Consumer<CapsuleController>(
                 builder: (context, controller, _) {
                   return Center(
-                    child: SizedBox(
-                      width: 150,
-                      height: 150,
+                    child: 
+                    SizedBox(
+                      width: 180,
+                      height: 180,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
@@ -134,12 +136,42 @@ class CreateCapsuleFinalView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Text(
-                            "${controller.daysRemaining} Days",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                          Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                children: [
+                                  WidgetSpan(
+                                    alignment: PlaceholderAlignment.middle,
+                                    child: Icon(
+                                      Icons.access_time,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " Countdown\n\n",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                      "${controller.timeRemaining.inDays}d "
+                                      "${controller.timeRemaining.inHours % 24}h "
+                                      "${controller.timeRemaining.inMinutes % 60}m "
+                                      "${controller.timeRemaining.inSeconds % 60}s",
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -149,11 +181,21 @@ class CreateCapsuleFinalView extends StatelessWidget {
                 },
               ),
               SizedBox(height: 20.h),
+              Text(
+                "This capsule will unlock on 17 Sept 2025",
+                style: GoogleFonts.inter(
+                  color: Color(0xFFFFFFFF),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500
+                ),
+              ),
+              SizedBox(height: 30.h),
               CustomRoundedButton(
-                text: "Next",
+                text: "Save Capsule",
                 backgroundColor: FontColors.button_color,
                 textColor: Colors.white,
                 onPressed: () {
+                  showCapsuleSealedDialog(context);
                   //context.push('/capsule_final_view');
                 },
               ),

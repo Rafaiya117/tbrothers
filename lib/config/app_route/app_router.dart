@@ -13,6 +13,9 @@ import 'package:appsoleum/features/create_capsule/view/create_capsule_add_date.d
 import 'package:appsoleum/features/create_capsule/view/create_capsule_final_view.dart';
 import 'package:appsoleum/features/create_capsule/view/create_capsule_note_view.dart';
 import 'package:appsoleum/features/create_capsule/view/create_capsule__image_view.dart';
+import 'package:appsoleum/features/gallary_and_timeline/view/gallary_view.dart';
+import 'package:appsoleum/features/gallary_and_timeline/view/time_line_view.dart';
+import 'package:appsoleum/features/gallary_and_timeline/view/timeline_video.dart';
 import 'package:appsoleum/features/home_page/view/home_page_view.dart';
 import 'package:appsoleum/features/landding/view/landing_page.dart';
 import 'package:appsoleum/features/onboarding_one/view/onboarding_one_view.dart';
@@ -92,6 +95,18 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/capsule_final_view',
       builder: (context, state) => CreateCapsuleFinalView(),
+    ),
+    GoRoute(
+      path: '/gallary_view',
+      builder: (context, state) => GallaryView(),
+    ),
+    GoRoute(
+      path: '/timeline_view',
+      builder: (context, state) => TimeLineView(),
+    ),
+    GoRoute(
+      path: '/video_time_line',
+      builder: (context, state) => TimelineVideo(),
     ),
   ],
 );
