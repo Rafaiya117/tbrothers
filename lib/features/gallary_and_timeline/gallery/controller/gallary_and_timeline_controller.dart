@@ -1,7 +1,8 @@
-import 'package:appsoleum/features/gallary_and_timeline/model/time_line_model.dart';
+import 'package:appsoleum/features/gallary_and_timeline/commons/controller/inmedia_controller.dart';
+import 'package:appsoleum/features/gallary_and_timeline/commons/model/time_line_model.dart';
 import 'package:flutter/material.dart';
 
-class GalleryTimelineController extends ChangeNotifier {
+class GalleryTimelineController extends ChangeNotifier  implements IMediaToggleController {
   //!-------------Media Toggle--------------!
   String _selectedOption = 'Gallery';
   final List<String> _options = ['Gallery', 'Timeline'];

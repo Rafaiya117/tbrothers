@@ -1,14 +1,14 @@
 import 'package:appsoleum/core/utils/theme.dart';
-import 'package:appsoleum/features/gallary_and_timeline/controller/timeline_video.dart';
-import 'package:appsoleum/features/gallary_and_timeline/widgets/video_card.dart';
+import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/media_selector.dart';
+import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/timeline_image_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class TimelineVideo extends StatelessWidget {
-  const TimelineVideo({super.key});
+class TimeLineImage extends StatelessWidget {
+  const TimeLineImage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,29 +51,54 @@ class TimelineVideo extends StatelessWidget {
                   ],
                 ),
               SizedBox(height: 20.h),
+              Consumer<TimelineImageController>(
+                builder:(context,controller,_){
+                  return 
+                    MediaToggle(
+                      controller: controller,
+                        onSelectionChanged: (value) {
+                          switch (value) {
+                            case 'Photos':
+                              //context.push('/gallary_view');
+                            break;
+                            case 'Videos':
+                              //context.push('/videos_view');
+                              break;
+                            case 'Audios':
+                              //context.push('/timeline_view');
+                            break;
+                          default:
+                            print('Unknown selection: $value');
+                        }
+                      },
+                    );
+                  }
+                ),
+              SizedBox(height: 20.h),
               Expanded(
-                child: Consumer<TimelineVideoController>(
+                child: Consumer<TimelineImageController>(
                   builder: (context, controller, child) {
-                    final videoList = controller.videoList;
-
+                    final imagePaths = controller.imagePaths;
                     return GridView.builder(
                       padding: const EdgeInsets.all(12),
-                      itemCount: videoList.length,
-                      gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 1.2,
-                        ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 167 / 148, 
+                      ),
+                      itemCount: imagePaths.length,
                       itemBuilder: (context, index) {
-                        final video = videoList[index];
-                        return VideoCard(
-                          thumbnailPath: video.thumbnail,
-                          duration: video.duration,
-                          onTap: () {
-                            // Handle video tap
-                          },
+                        return SizedBox(
+                          width: 167,
+                          height: 148,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(
+                              imagePaths[index],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         );
                       },
                     );

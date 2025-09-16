@@ -1,4 +1,4 @@
-import 'package:appsoleum/features/gallary_and_timeline/model/time_line_model.dart';
+import 'package:appsoleum/features/gallary_and_timeline/commons/model/time_line_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';

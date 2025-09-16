@@ -1,19 +1,19 @@
 import 'package:appsoleum/core/components/custom_navigation_bar.dart';
 import 'package:appsoleum/core/utils/theme.dart';
-import 'package:appsoleum/features/gallary_and_timeline/controller/gallary_and_timeline_controller.dart';
-import 'package:appsoleum/features/gallary_and_timeline/widgets/custom_emotional_card.dart';
-import 'package:appsoleum/features/gallary_and_timeline/widgets/media_selector.dart';
-import 'package:appsoleum/features/gallary_and_timeline/widgets/selectable_text_button.dart';
-import 'package:appsoleum/features/gallary_and_timeline/widgets/time_line_card.dart';
+import 'package:appsoleum/features/gallary_and_timeline/gallery/controller/gallary_and_timeline_controller.dart';
+import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/custom_emotional_card.dart';
+import 'package:appsoleum/features/gallary_and_timeline/gallery/widget/media_card.dart';
+import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/media_selector.dart';
+import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/selectable_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class TimeLineView extends StatelessWidget {
-  const TimeLineView({super.key});
+class GallaryView extends StatelessWidget {
+  const GallaryView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,27 +64,33 @@ class TimeLineView extends StatelessWidget {
                 ),
                 SizedBox(height:20.h),
                 Consumer<GalleryTimelineController>(
-                  builder:(context,controller,_){
-                    return 
-                    MediaToggle(
+                  builder: (context, controller, _) {
+                    return Builder(
+                      builder: (innerContext) => GestureDetector(
+                        onTap: () {
+                          innerContext.push('/timeline_view');
+                        },
+                        child:MediaToggle(
                           controller: controller,
                           onSelectionChanged: (value) {
                             switch (value) {
-                            case 'Gallery':
-                              context.push('/gallary_view');
-                            break;
-                            // case 'Videos':
-                            //   context.push('/videos_view');
-                            //   break;
-                            case 'Timeline':
-                              context.push('/timeline_view');
-                            break;
-                          default:
-                            print('Unknown selection: $value');
-                        }
-                      },
+                              case 'Gallery':
+                                context.push('/gallary_view');
+                                break;
+                              // case 'Videos':
+                              //   context.push('/videos_view');
+                              //   break;
+                              case 'Timeline':
+                                context.push('/timeline_view');
+                                break;
+                              default:
+                                print('Unknown selection: $value');
+                            }
+                          },
+                        ),
+                      ),
                     );
-                  }
+                  },
                 ),
                 SizedBox(height: 20.h),
                 SizedBox(
@@ -182,11 +188,37 @@ class TimeLineView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 20.w), 
-                    SvgPicture.asset(
-                      'assets/icons/settings.svg',
-                      width: 32.w,
-                      height: 32.h,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Grid",
+                          style: GoogleFonts.inter(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFFFFFFFF),
+                          ),
+                        ),
+                        SizedBox(width: 20.w), 
+                        Consumer<GalleryTimelineController>(
+                          builder: (context, controller, child) {
+                            return SizedBox(
+                              height: 18.h,
+                              width: 34.w,
+                              child: Switch(
+                                value: controller.isSwitched,
+                                onChanged: (newValue) {
+                                  controller.toggleSwitch(newValue);
+                                },
+                                activeColor: FontColors.background_color,
+                                inactiveThumbColor: FontColors.background_color,
+                                activeTrackColor: FontColors.icon_color,
+                                inactiveTrackColor: FontColors.icon_color,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -220,10 +252,8 @@ class TimeLineView extends StatelessWidget {
                     ),
                     SelectableTextButton(
                       label: "Videos",
-                      isSelected: false,
-                      onPressed: () {
-                        context.push('/video_time_line');
-                      },
+                      isSelected: true,
+                      onPressed: () {},
                       textColor: Colors.white,
                       backgroundColor: Color(0xFF2A2E52),
                       borderRadius: 30.r,
@@ -240,24 +270,28 @@ class TimeLineView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height:5.h),
-                Consumer<GalleryTimelineController>(
-                  builder: (context, controller, _) {
-                    final entries = controller.entries;
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.all(16),
-                      itemCount: entries.length,
-                      itemBuilder: (context, index) {
-                        return TimelineCard(
-                          entry: entries[index],
-                          isFirst: index == 0,
-                          isLast: index == entries.length - 1,
-                        );
-                      },
-                    );
-                  },
-                ),
+                GridView.count(
+                  shrinkWrap: true, 
+                  physics:NeverScrollableScrollPhysics(), 
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  children: const [
+                    MediaCard(
+                      type: MediaType.image,
+                      imagePath: "assets/images/family.png",
+                    ),
+                    MediaCard(
+                      type: MediaType.video,
+                      imagePath: "assets/images/family.png",
+                    ),
+                    MediaCard(
+                      type: MediaType.text,
+                      title: "Exciting Day!",
+                      description:"Today was absolutely amazing! I went to the beach...",
+                    ),
+                  ],
+                )
               ],
             ),
           ),

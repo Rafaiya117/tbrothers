@@ -22,7 +22,7 @@ class SelectableTextButton extends StatelessWidget {
     required this.backgroundColor,
     this.selectedGradient,
     this.borderRadius = 20,
-    this.borderColor = Colors.transparent, // default to no border
+    this.borderColor = Colors.transparent, 
   }) : super(key: key);
 
   @override

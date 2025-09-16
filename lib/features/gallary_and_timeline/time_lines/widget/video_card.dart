@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+
 
 class VideoCard extends StatelessWidget {
   final String thumbnailPath;
@@ -22,17 +24,17 @@ class VideoCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(
               thumbnailPath,
-              fit: BoxFit.cover,
               width: double.infinity,
               height: 180,
+              fit: BoxFit.cover,
             ),
           ),
           Positioned.fill(
             child: Center(
-              child: Icon(
-                Icons.play_circle_fill,
-                color: Colors.white.withOpacity(0.9),
-                size: 48,
+              child: SvgPicture.asset(
+                'assets/icons/video_player_icon.svg',
+                width: 48,
+                height: 48,
               ),
             ),
           ),
