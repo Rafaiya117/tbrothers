@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomElevatedButton extends StatelessWidget {
@@ -12,7 +13,9 @@ class CustomElevatedButton extends StatelessWidget {
   final double borderRadius;
   final bool hasBorder;
   final Color borderColor;
-
+  final String? icon;
+  final Color iconColor;
+  final double svgIconSize;
   const CustomElevatedButton({
     super.key, 
     required this.text,
@@ -25,6 +28,9 @@ class CustomElevatedButton extends StatelessWidget {
     this.borderRadius = 12.0,
     this.hasBorder = false,            
     this.borderColor = Colors.black,   
+    this.icon,
+    this.iconColor=Colors.white,
+    this.svgIconSize = 20.0
   });
 
   @override
@@ -55,13 +61,28 @@ class CustomElevatedButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: Center(
-          child: Text(
-            text,
-            style: GoogleFonts.inter(
-              fontWeight:FontWeight.w600,
-              fontSize: 16,
-              letterSpacing: 1,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (icon != null) ...[
+                SvgPicture.asset(
+                  icon!,
+                  height: svgIconSize,
+                  width: svgIconSize,
+                  colorFilter: ColorFilter.mode(textColor, BlendMode.srcIn),
+                ),
+                const SizedBox(width: 8),
+              ],
+              Text(
+                text,
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  letterSpacing: 1,
+                  color: textColor,
+                ),
+              ),
+            ],
           ),
         ),
       ),

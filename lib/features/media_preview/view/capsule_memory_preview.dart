@@ -56,26 +56,36 @@ class CapsuleMemoryPreview extends StatelessWidget {
                 ),
               ),
               SizedBox(height:50.h),
-              MediaCards(
-                type: MediaType.video,
-                title: "Making memories with my kids!",
-                subtitle:"Crafting lasting memories with my kids is one of the most rewarding experiences.",
-                scheduledDate: "June 14, 2034",
-                mediaPath: "assets/images/family.png",
-                duration: "5 Minutes",
-                onTap: () {
-                  // handle play or open
-                },
+              // MediaCards(
+              //   type: MediaType.video,
+              //   title: "Making memories with my kids!",
+              //   subtitle:"Crafting lasting memories with my kids is one of the most rewarding experiences.",
+              //   scheduledDate: "June 14, 2034",
+              //   mediaPath: "assets/images/family.png",
+              //   duration: "5 Minutes",
+              //   onTap: () {
+              //     // handle play or open
+              //   },
+              // ),
+              MemoryCard(
+                mediaType: MediaType.videos,
+                date: 'June 14, 2034',
+                title: 'Making memories with my kids!',
+                description:'Crafting lasting memories with my kids is one of the most rewarding experiences.',
+                mediaAsset:'https://ix-marketing.imgix.net/autotagging.png?auto=format,compress&w=1946',
+                duration: '5',
               ),
+              SizedBox(height: 20.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CustomElevatedButton(
-                    text: 'Create account',
+                    icon: 'assets/icons/edit_icon.svg',
+                    text: 'Edit Content',
                      onPressed: () {
                       context.push('/create_account_page');
                     },
-                    textColor: Colors.white,
+                    textColor: Color(0xFFFE8641),
                     buttonColorStart: Color(0xFF191D3F),
                     buttonColorEnd: Color(0xFF191D3F),
                     height: 48.0.h,
@@ -86,11 +96,12 @@ class CapsuleMemoryPreview extends StatelessWidget {
                   ),
                   SizedBox(width: 10.w),
                   CustomElevatedButton(
-                    text: 'Login',
+                    icon: 'assets/icons/resize_icon.svg',
+                    text: 'Resizable',
                     onPressed: () {
                       context.push('/login_page');
                     },
-                    textColor: Colors.white,
+                    textColor: Color(0xFFFE8641),
                     buttonColorStart: Color(0xFF191D3F),
                     buttonColorEnd: Color(0xFF191D3F),
                     height: 48.0.h,
