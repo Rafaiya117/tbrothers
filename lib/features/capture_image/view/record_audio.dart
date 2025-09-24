@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 
 class RecordAudio extends StatefulWidget {
@@ -17,6 +18,7 @@ class RecordAudio extends StatefulWidget {
 class _RecordAudioState extends State<RecordAudio> {
   @override
   Widget build(BuildContext context) {
+    final recordingController = Provider.of<RecordingController>(context);
    return Scaffold(
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -71,15 +73,11 @@ class _RecordAudioState extends State<RecordAudio> {
               ),
               SizedBox(height:20.h),
                RecordControlPanel(
-                onRecord: () {
-                  print('Record tapped');
-                },
-                onReset: () {
-                  print('Reset tapped');
-                },
-                onDelete: () {
-                  print('Delete tapped');
-                },
+                onRecord: () => recordingController.record(),
+                onReset: () => recordingController.reset(),
+                onDelete: () => recordingController.delete(),
+                isRecording: recordingController.isRecording,
+                progress: recordingController.progress,
               ),
             ],
           ),

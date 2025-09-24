@@ -1,9 +1,11 @@
 import 'package:appsoleum/core/components/custom_navigation_bar.dart';
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/home_page/controller/home_page_controller.dart';
+import 'package:appsoleum/features/home_page/controller/media_player_controller.dart';
 import 'package:appsoleum/features/home_page/widget/custom_memory_card.dart';
 import 'package:appsoleum/features/home_page/widget/quick_action_card.dart';
 import 'package:appsoleum/features/home_page/widget/saved_memory_card_item.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -75,14 +77,70 @@ const HomePageView({super.key});
                     ),
                   ),
                 ),
+                SizedBox(height: 10.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "My Posts",
+                      style:GoogleFonts.inter(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.sp,
+                        color: Color(0xFFFFFFFF),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: Size(0, 0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          child: Text(
+                            "View all",
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.sp,
+                              color: FontColors.button_color,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 2),
+                        SizedBox(
+                          width: 55.w,
+                          child: DottedLine(
+                            dashColor: Colors.orange,
+                            lineThickness: 1,
+                            dashLength: 2,
+                            dashGapLength: 2,
+                            direction: Axis.horizontal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
                 SizedBox(height: 20.h),
-                MemoryCard(
-                  title: 'Birthday Celebrations',
-                  description: "Mom's 60th birthday party so much joy!",
-                  date: 'Jan 10, 2024',
-                  imageUrl: 'assets/images/memory_card.png',
-                  isVideo: true,
-                  showBorder: true,
+                SizedBox(
+                  height: 200.h,
+                  child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                    //padding: const EdgeInsets.symmetric(horizontal: 1),
+                    itemCount: memoryItems.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 12),
+                    itemBuilder: (context, index) {
+                      final item = memoryItems[index];
+                      return MemoryCardItem(
+                        imagePath: item.imagePath,
+                        title: item.title,
+                        description: item.description,
+                        date: item.date,
+                      );
+                    },
+                  ),
                 ),
                 SizedBox(height: 20.h,),
                 Align(
@@ -111,7 +169,9 @@ const HomePageView({super.key});
                     CustomActionButton(
                       icon: SvgPicture.asset('assets/icons/upload_image.svg'),
                       label: 'Upload Image', 
-                      onTap: () {  },
+                      onTap: () {
+                        context.push('/capture_image');
+                      },
                     ),
                     SizedBox(width:5.w),
                     CustomActionButton(
@@ -125,35 +185,33 @@ const HomePageView({super.key});
                   ],
                 ),
                 SizedBox(height: 20.h),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Saved Memory",
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 14.sp,
-                      color: FontColors.text_colors,
-                    ),
-                  ),
-                ),
-                SizedBox(height:20.h),
-                SizedBox(
-                  height: 200.h,
-                  child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                    //padding: const EdgeInsets.symmetric(horizontal: 1),
-                    itemCount: memoryItems.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 12),
-                    itemBuilder: (context, index) {
-                      final item = memoryItems[index];
-                      return MemoryCardItem(
-                        imagePath: item.imagePath,
-                        title: item.title,
-                        description: item.description,
-                        date: item.date,
-                      );
-                    },
-                  ),
+                Consumer<MediaController>(
+                  builder: (context, controller, _) {
+                    return MediaPreviewCard(
+                      category: "Travel",
+                      title: "Roaming Around",
+                      location: "San Jose, California",
+                      mediaUrl: "https://picsum.photos/400/200.jpg", 
+                      duration: "02:53",
+                      onTap: () {
+                        print("Play tapped!");
+                      }, 
+                      mediaType: 'image', 
+                      isPlaying: false, 
+                      onPlayPressed: () {  },
+                    );
+                    // return MediaPreviewCard(
+                    //   category: "Travel",
+                    //   title: "Exploring Yosemite",
+                    //   location: "California, USA",
+                    //   mediaUrl: controller.mediaUrl,
+                    //   duration: "05:42",
+                    //   mediaType:"https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4",     //controller.mediaType,
+                    //   videoThumbnail: controller.videoThumbnail,
+                    //   isPlaying: controller.isPlaying,
+                    //   onPlayPressed: controller.togglePlay,
+                    // );
+                  },
                 ),
               ],
             ),

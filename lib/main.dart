@@ -9,6 +9,7 @@ import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/ti
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/timeline_image_controller.dart';
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/timeline_video.dart';
 import 'package:appsoleum/features/home_page/controller/home_page_controller.dart';
+import 'package:appsoleum/features/home_page/controller/media_player_controller.dart';
 import 'package:appsoleum/features/landding/controller/landing_page_controller.dart';
 import 'package:appsoleum/features/onboarding_one/controller/onboarding_one_controller.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -67,6 +68,7 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_)=>TimelineVideoController()),
             ChangeNotifierProvider(create: (_)=>TimelineImageController()),
             ChangeNotifierProvider(create: (_)=>TimeLineAudioController()),
+            ChangeNotifierProvider(create: (_)=>MediaController(mediaUrl: '')),
           ],
           child:MaterialApp.router(
             debugShowCheckedModeBanner: false,

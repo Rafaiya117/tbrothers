@@ -1,144 +1,194 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:audio_waveforms/audio_waveforms.dart';
 
-class MemoryCard extends StatelessWidget {
+class MediaPreviewCard extends StatelessWidget {
+  final String category;
   final String title;
-  final String description;
-  final String date;
-  final String imageUrl;
-  final bool isVideo;
-  final bool showBorder;
+  final String location;
+  final String mediaUrl;
+  final String duration;
+  final String mediaType;
+  final Uint8List? videoThumbnail;
+  final bool isPlaying;
+  final VoidCallback onPlayPressed;
 
-  const MemoryCard({
+  const MediaPreviewCard({
     super.key,
+    required this.category,
     required this.title,
-    required this.description,
-    required this.date,
-    required this.imageUrl,
-    this.isVideo = false,
-    this.showBorder = true,
+    required this.location,
+    required this.mediaUrl,
+    required this.duration,
+    required this.mediaType,
+    this.videoThumbnail,
+    required this.isPlaying,
+    required this.onPlayPressed, required Null Function() onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    Widget thumbnail;
+    if (mediaType == "image") {
+      thumbnail = Image.network(
+        mediaUrl,
+        width: double.infinity,
+        height: 180,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => Container(
+          height: 180,
+          color: Colors.grey[300],
+          child: const Icon(Icons.broken_image, size: 40),
+        ),
+      );
+    } else if (mediaType == "video") {
+      thumbnail = videoThumbnail != null
+        ? Image.memory(
+          videoThumbnail!,
+          width: double.infinity,
+          height: 180,
+          fit: BoxFit.cover,
+        )
+        : Container(
+          height: 180,
+          color: Colors.black26,
+          child: const Center(child: CircularProgressIndicator()),
+        );
+      } else if (mediaType == "audio") {
+      thumbnail = Container(
+        height: 180,
+        color: Colors.blue[50],
+        child: Center(
+          child: AudioFileWaveforms(
+            size: Size(MediaQuery.of(context).size.width * 0.7, 70),
+            playerController: PlayerController()..preparePlayer(path: mediaUrl),
+            enableSeekGesture: true,
+            waveformType: WaveformType.fitWidth,
+            continuousWaveform: true,
+            playerWaveStyle: const PlayerWaveStyle(
+              fixedWaveColor: Colors.grey,
+              liveWaveColor: Colors.blueAccent,
+              spacing: 5,
+            ),
+          ),
+        ),
+      );
+    } else {
+      thumbnail = Container(
+        height: 180,
+        color: Colors.grey,
+        child: const Center(child: Text("Unsupported format")),
+      );
+    }
     return Container(
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: showBorder
-            ? Border.all(color: Colors.deepPurple.shade200, width: 1)
-            : null,
+        color: Colors.white,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Top Banner
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            decoration: const BoxDecoration(
-              color: Colors.orange,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-              ),
-            ),
-            child: const Center(
-              child: Text(
-                "Today's Memory",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                ),
-              ),
-            ),
-          ),
-
-          // 🖼️ Image with video badge
           Stack(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.zero,
-                  topRight: Radius.zero,
-                  bottomLeft: Radius.circular(0),
-                  bottomRight: Radius.circular(0),
-                ),
-                child: Image.asset(
-                  imageUrl,
-                  width: double.infinity,
-                  height: 200.h,
-                  fit: BoxFit.fill,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                child: thumbnail,
+              ),
+              Positioned(
+                top: 8,
+                left: 8,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    category,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
-
-              if (isVideo)
+              if (mediaType != "image")
                 Positioned(
-                  top: 8,
+                  bottom: 8,
+                  left: 8,
                   right: 8,
-                  child: Container(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.videocam,
-                            size: 14, color: Colors.white),
-                        const SizedBox(width: 4),
-                        const Text(
-                          "Video",
-                          style: TextStyle(
-                              fontSize: 12, color: Colors.white),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Play button
+                      InkWell(
+                        onTap: onPlayPressed,
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(
+                            //color: Colors.white70,
+                            shape: BoxShape.circle,
+                          ),
+                          child: mediaType == "video"
+                            ? SvgPicture.asset(
+                              isPlaying
+                                ? "assets/icons/pause.svg"
+                                : "assets/icons/video_player_icon.svg",
+                                  width: 28,
+                                  height: 28,
+                                  // ignore: deprecated_member_use
+                                  // color: Colors.wh,
+                                )
+                                : SvgPicture.asset(
+                                  'assets/icons/video_player_icon.svg',
+                                  width: 28.w,
+                                  height: 28.h,
+                                  // ignore: deprecated_member_use
+                                  color:Colors.white.withOpacity(0.84) ,
+                                ),
+                              ),
+                            ),
+                          // Duration badge
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.black54,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          child: Text(
+                            duration,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-            ],
-          ),
-
-          // 📄 Title, Description, and Date
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  description,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.black54,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const Icon(Icons.access_time,
-                        size: 14, color: Colors.grey),
-                    const SizedBox(width: 4),
-                    Text(
-                      date,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black45,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
+            ),
+          // Title + Location (with dark background like design)
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xFF1F2544), // dark navy bg
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(12),
+              ),
+            ),
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              "$title\n$location",
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
@@ -146,3 +196,25 @@ class MemoryCard extends StatelessWidget {
     );
   }
 }
+
+
+// MediaPreviewCard(
+//   category: "Music",
+//   title: "Relaxing Piano Track",
+//   location: "Spotify Demo",
+//   mediaUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // valid mp3
+//   duration: "03:15",
+//   onTap: () {
+//     print("Play audio tapped!");
+//   },
+// ),
+// MediaPreviewCard(
+//   category: "Family",
+//   title: "Ethan’s 2nd birthday party",
+//   location: "San Jose, California",
+//   mediaUrl: "https://picsum.photos/400/200", // random valid image
+//   duration: "02:53",
+//   onTap: () {
+//     print("Play tapped!");
+//   },
+// ),
