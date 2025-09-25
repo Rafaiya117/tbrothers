@@ -1,9 +1,9 @@
 import 'package:appsoleum/core/components/custom_button.dart';
 import 'package:appsoleum/core/components/custom_input_field.dart';
 import 'package:appsoleum/core/utils/theme.dart';
-import 'package:appsoleum/features/capture_image/controller/capture_controller.dart';
-import 'package:appsoleum/features/capture_image/custom_widget/capture_buttons_section.dart';
-import 'package:appsoleum/features/capture_image/custom_widget/media_seletor.dart';
+import 'package:appsoleum/features/capture_message/controller/capture_controller.dart';
+import 'package:appsoleum/features/capture_message/custom_widget/capture_buttons_section.dart';
+import 'package:appsoleum/features/capture_message/custom_widget/media_seletor.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

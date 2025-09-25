@@ -1,5 +1,5 @@
-import 'package:appsoleum/features/capture_image/view/capture_image.dart';
-import 'package:appsoleum/features/capture_image/view/record_audio.dart';
+import 'package:appsoleum/features/capture_message/view/capture_image.dart';
+import 'package:appsoleum/features/capture_message/view/record_audio.dart';
 import 'package:appsoleum/features/auths/complete_profile/view/complete_profile_view.dart';
 import 'package:appsoleum/features/auths/complete_profile/view/completed_last_profile.dart';
 import 'package:appsoleum/features/auths/complete_profile/view/profile_image_upload.dart';
@@ -9,6 +9,7 @@ import 'package:appsoleum/features/auths/login/view/login_view.dart';
 import 'package:appsoleum/features/auths/reset_password/view/reset_password.dart';
 import 'package:appsoleum/features/auths/signup/view/signup_view.dart';
 import 'package:appsoleum/features/auths/verify_otp/view/verify_otp.dart';
+import 'package:appsoleum/features/capture_message/view/video_capture.dart';
 import 'package:appsoleum/features/create_capsule/view/create_capsule_add_date.dart';
 import 'package:appsoleum/features/create_capsule/view/create_capsule_final_view.dart';
 import 'package:appsoleum/features/create_capsule/view/create_capsule_note_view.dart';
@@ -22,6 +23,8 @@ import 'package:appsoleum/features/home_page/view/home_page_view.dart';
 import 'package:appsoleum/features/landding/view/landing_page.dart';
 import 'package:appsoleum/features/media_preview/view/capsule_memory_preview.dart';
 import 'package:appsoleum/features/onboarding_one/view/onboarding_one_view.dart';
+import 'package:appsoleum/features/profile/view/account_information_view.dart';
+import 'package:appsoleum/features/profile/view/profile_settings.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -84,6 +87,10 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => RecordAudio(),
     ),
     GoRoute(
+      path: '/record_video',
+      builder: (context, state) => RecordVideo(),
+    ),
+    GoRoute(
       path: '/create_capsule',
       builder: (context, state) => CreateCapsuleImageView(),
     ),
@@ -122,6 +129,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/capsule_preview',
       builder: (context, state) => CapsuleMemoryPreview(),
+    ),
+    GoRoute(
+      path: '/profile_menu_settings',
+      builder: (context, state) => ProfileSettingsMenu(),
+    ),
+    GoRoute(
+      path: '/account_info_view',
+      builder: (context, state) => AccountInformationView(),
     ),
   ],
 );

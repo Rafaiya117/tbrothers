@@ -178,7 +178,7 @@ const HomePageView({super.key});
                       icon: SvgPicture.asset('assets/icons/create_capsule.svg'),
                       label: 'Create Capsule', 
                       onTap: () {
-                        context.push('/create_capsule');
+                        context.push('/record_video');
                         //context.push('/capture_image');
                       },
                     ),

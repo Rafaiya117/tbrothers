@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class RecordControlPanel extends StatelessWidget {
   final VoidCallback onRecord;
@@ -9,13 +8,13 @@ class RecordControlPanel extends StatelessWidget {
   final double progress;
 
   const RecordControlPanel({
-    Key? key,
+    super.key,
     required this.onRecord,
     required this.onReset,
     required this.onDelete,
     this.isRecording = false,
     this.progress = 0.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,8 @@ class RecordControlPanel extends StatelessWidget {
             icon: const Icon(Icons.refresh),
             color: Colors.white70,
             iconSize: 28,
-            onPressed: isRecording ? null : onReset,
+            //onPressed: isRecording ? null : onReset,
+            onPressed: onReset,
           ),
 
           // Record button with circular progress
@@ -49,8 +49,7 @@ class RecordControlPanel extends StatelessWidget {
                       child: CircularProgressIndicator(
                         value: progress,
                         strokeWidth: 4,
-                        valueColor:
-                            const AlwaysStoppedAnimation(Colors.orange),
+                        valueColor:const AlwaysStoppedAnimation(Colors.orange),
                         backgroundColor: Colors.white24,
                       ),
                     ),
@@ -77,13 +76,13 @@ class RecordControlPanel extends StatelessWidget {
               ),
             ),
           ),
-
           // Delete button
           IconButton(
             icon: const Icon(Icons.delete_outline),
             color: Colors.white70,
             iconSize: 28,
-            onPressed: isRecording ? null : onDelete,
+            //onPressed: isRecording ? null : onDelete,
+            onPressed: onDelete,
           ),
         ],
       ),
