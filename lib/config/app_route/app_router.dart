@@ -24,6 +24,7 @@ import 'package:appsoleum/features/landding/view/landing_page.dart';
 import 'package:appsoleum/features/media_preview/view/capsule_memory_preview.dart';
 import 'package:appsoleum/features/onboarding_one/view/onboarding_one_view.dart';
 import 'package:appsoleum/features/profile/view/account_information_view.dart';
+import 'package:appsoleum/features/profile/view/edit_account_info.dart';
 import 'package:appsoleum/features/profile/view/profile_settings.dart';
 import 'package:go_router/go_router.dart';
 
@@ -137,6 +138,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/account_info_view',
       builder: (context, state) => AccountInformationView(),
+    ),
+    GoRoute(
+      path: '/edit_account_info',
+      builder: (context, state) => EditAccountInfo(),
     ),
   ],
 );
