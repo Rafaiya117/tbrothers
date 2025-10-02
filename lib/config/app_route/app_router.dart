@@ -21,6 +21,7 @@ import 'package:appsoleum/features/gallary_and_timeline/time_lines/view/time_lin
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/view/timeline_video.dart';
 import 'package:appsoleum/features/home_page/view/home_page_view.dart';
 import 'package:appsoleum/features/landding/view/landing_page.dart';
+import 'package:appsoleum/features/legecy_home/appso_home.dart';
 import 'package:appsoleum/features/media_preview/view/capsule_memory_preview.dart';
 import 'package:appsoleum/features/onboarding_one/view/onboarding_one_view.dart';
 import 'package:appsoleum/features/profile/view/account_information_view.dart';
@@ -142,6 +143,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/edit_account_info',
       builder: (context, state) => EditAccountInfo(),
+    ),
+    GoRoute(
+      path: '/legecy_screen',
+      builder: (context, state) => LegacyScreen(),
     ),
   ],
 );

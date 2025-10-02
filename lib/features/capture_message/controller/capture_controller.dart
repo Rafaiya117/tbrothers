@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class CaptureController extends ChangeNotifier{
+class CaptureController extends ChangeNotifier {
   String _selectedOption = 'Picture';
   final List<String> _options = ['Picture', 'Video', 'Audio'];
 
@@ -18,7 +18,7 @@ class CaptureController extends ChangeNotifier{
     }
   }
 
-  //!----------Open Camera and gallary-----------!
+  //!----------Open Camera and gallery-----------!
   CameraController? _cameraController;
   List<CameraDescription>? _cameras;
 
@@ -46,18 +46,23 @@ class CaptureController extends ChangeNotifier{
   Future<void> openCamera() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
     if (image != null) {
-       print("Image picked: ${image.path}");
+      print("Image picked: ${image.path}");
       _capturedImage = File(image.path);
-      notifyListeners(); 
+      notifyListeners();
     }
   }
 
   Future<void> openGallery() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-       print("Image picked: ${image.path}");
+      print("Image picked: ${image.path}");
       _capturedImage = File(image.path);
-      notifyListeners(); 
+      notifyListeners();
     }
+  }
+
+  void setCapturedImage(File file) {
+    _capturedImage = file;
+    notifyListeners();
   }
 }

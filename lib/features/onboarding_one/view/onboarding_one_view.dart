@@ -153,7 +153,10 @@ class OnboardingOneView extends StatelessWidget {
                                 begin: Alignment.topRight,
                                 end: Alignment.bottomLeft,
                               ),
-                              onTap: () => controller.selectIndex(0),
+                              onTap: () {
+                                controller.selectIndex(0);
+                                
+                              }
                             ),
                           ),
                         Consumer<OnboardingOneController>(

@@ -172,7 +172,8 @@ class LoginView extends StatelessWidget {
                           backgroundColor: FontColors.button_color,
                             textColor: Colors.white,
                               onPressed: () {
-                                context.push('/home_page');
+                                //context.push('/home_page');
+                                context.push('/legecy_screen');
                               },
                             ),
                           SizedBox(height:10.h),

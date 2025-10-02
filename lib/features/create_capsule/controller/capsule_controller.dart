@@ -70,8 +70,8 @@ class CapsuleController extends ChangeNotifier {
 
     // Update the text field
     dateController.text = "${selected.day.toString().padLeft(2, '0')}/"
-        "${selected.month.toString().padLeft(2, '0')}/"
-        "${selected.year}";
+      "${selected.month.toString().padLeft(2, '0')}/"
+      "${selected.year}";
     _startDate = DateTime.now(); 
     notifyListeners();
   }
