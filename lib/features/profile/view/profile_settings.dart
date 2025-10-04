@@ -68,21 +68,21 @@ class ProfileSettingsMenu extends StatelessWidget {
                   SettingsOption(
                     title: "Subscription",
                     onTap: () {
-                      Navigator.pushNamed(context, "/subscription");
+                      context.push('/subscription_plan');
                     },
                   ),
                   SizedBox(height: 10.h,),
                   SettingsOption(
                     title: "Privacy and Policy",
                     onTap: () {
-                      Navigator.pushNamed(context, "/account_info");
+                      context.push('/privacy_policy');
                     },
                   ),
                   SizedBox(height: 10.h),
                   SettingsOption(
                     title: "Terms and Conditions",
                     onTap: () {
-                      Navigator.pushNamed(context, "/subscription");
+                      context.push('/terms_condition');
                     },
                   ),
                   SizedBox(height: 10.h),

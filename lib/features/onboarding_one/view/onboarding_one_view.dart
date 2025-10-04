@@ -182,7 +182,7 @@ class OnboardingOneView extends StatelessWidget {
                           builder: (context, controller, _) =>
                             CustomAccountOption(
                               svgIconPath: 'assets/icons/icon_benificier.svg',
-                              title: "Beneficier Account",
+                              title: "Viwer Account",
                               subtitle: "Live, Preserve, Create.",
                               iconColor: FontColors.icon_color,
                               isSelected: controller.selectedIndex == 2,
@@ -210,10 +210,22 @@ class OnboardingOneView extends StatelessWidget {
                                 : FontColors.disable_text,
                                 onPressed: controller.selectedIndex != -1
                                   ? () {
-                                    context.push('/login_page');
-                                  }: null,
-                                ),
+                                  String accountType;
+                                  if (controller.selectedIndex == 0) {
+                                    accountType = "legacy";
+                                  } else if (controller.selectedIndex == 1) {
+                                    accountType = "creator";
+                                  } else {
+                                    accountType = "beneficiary";
+                                  }
+                                  context.push(
+                                    '/login_page',
+                                    extra: accountType,
+                                    );
+                                  }
+                                : null,
                               ),
+                            ),
                             SizedBox(height: 15.h,)
                           ],
                         ),

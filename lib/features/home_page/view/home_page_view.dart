@@ -5,6 +5,7 @@ import 'package:appsoleum/features/home_page/controller/media_player_controller.
 import 'package:appsoleum/features/home_page/widget/custom_memory_card.dart';
 import 'package:appsoleum/features/home_page/widget/quick_action_card.dart';
 import 'package:appsoleum/features/home_page/widget/saved_memory_card_item.dart';
+import 'package:appsoleum/features/home_page/widget/bottom_card.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -162,7 +163,8 @@ const HomePageView({super.key});
                       icon: SvgPicture.asset('assets/icons/micro_phone.svg'),
                       label: 'Record Message', 
                       onTap: () {
-                        context.push('/record_audio');
+                        showCaptureOptionsBottomSheet(context);
+                        //context.push('/record_audio');
                       },
                     ),
                     SizedBox(width:5.w),
@@ -178,8 +180,7 @@ const HomePageView({super.key});
                       icon: SvgPicture.asset('assets/icons/create_capsule.svg'),
                       label: 'Create Capsule', 
                       onTap: () {
-                        context.push('/record_video');
-                        //context.push('/capture_image');
+                        context.push('/create_capsule');
                       },
                     ),
                   ],
@@ -235,7 +236,9 @@ const HomePageView({super.key});
           ],
         ),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            context.push('/create_post');
+          },
           backgroundColor: FontColors.button_color,
           elevation: 0,
           shape: const CircleBorder(),

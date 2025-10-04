@@ -122,7 +122,7 @@ class CreateCapsuleImageView extends StatelessWidget {
                           textColor:controller.images.isEmpty?FontColors.disable_text: Colors.white,
                           onPressed: controller.images.isEmpty
                             ? null: () {
-                              context.push('/create_capsule_addnote');
+                            context.push('/create_capsule_addnote');
                           },
                         ),
                       );

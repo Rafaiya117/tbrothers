@@ -1,12 +1,13 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class MediaController extends ChangeNotifier {
-  final String mediaUrl;
+  String mediaUrl;
 
   String mediaType = "unknown";
   Uint8List? videoThumbnail;
@@ -15,13 +16,27 @@ class MediaController extends ChangeNotifier {
   PlayerController? _audioWaveController; 
 
   bool isPlaying = false;
-
-  MediaController({required this.mediaUrl}) {
-    _loadMedia(mediaUrl);
+  final ImagePicker _picker = ImagePicker();
+  
+  MediaController({this.mediaUrl = ''}) {
+    if (mediaUrl.isNotEmpty) {
+      _loadMedia(mediaUrl);
+    }
   }
 
   VideoPlayerController? get videoController => _videoController;
   PlayerController? get audioWaveController => _audioWaveController; 
+
+  Future<void> pickMedia() async {
+    final XFile? file = await _picker.pickMedia(); 
+
+    if (file != null) {
+      mediaUrl = file.path; 
+      await _loadMedia(mediaUrl);
+    } else {
+      print('Media picking canceled.');
+    }
+  }
 
   Future<void> _loadMedia(String url) async {
     await _disposeMedia();
@@ -50,9 +65,8 @@ class MediaController extends ChangeNotifier {
       quality: 75,
     );
     videoThumbnail = thumb;
-
     // ignore: deprecated_member_use
-    _videoController = VideoPlayerController.network(url);
+    _videoController = VideoPlayerController.network(url); 
     await _videoController!.initialize();
   }
 

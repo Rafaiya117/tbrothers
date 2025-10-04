@@ -296,7 +296,9 @@ class AccountInformationView extends StatelessWidget {
                         Padding(
                           padding:EdgeInsets.symmetric(horizontal: 25.w, vertical: 2.h),
                           child: TextButton(
-                            onPressed: (){}, 
+                            onPressed: (){
+                              context.push('/edit_password');
+                            }, 
                             child: Container(
                               width: 144.w,
                               height: 37.h,

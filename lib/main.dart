@@ -12,8 +12,11 @@ import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/ti
 import 'package:appsoleum/features/home_page/controller/home_page_controller.dart';
 import 'package:appsoleum/features/home_page/controller/media_player_controller.dart';
 import 'package:appsoleum/features/landding/controller/landing_page_controller.dart';
+import 'package:appsoleum/features/memoriers/controller/memory_controller.dart';
 import 'package:appsoleum/features/onboarding_one/controller/onboarding_one_controller.dart';
+import 'package:appsoleum/features/profile/controller/edit_controller.dart';
 import 'package:appsoleum/features/profile/controller/profile_settings_controller.dart';
+import 'package:appsoleum/features/subscription_plan/controller/subscription_controller.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -73,6 +76,9 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_)=>MediaController(mediaUrl: '')),
             ChangeNotifierProvider(create: (_)=> VideoRecordingController()),
             ChangeNotifierProvider(create: (_)=> ProfileSettingsMenuController()),
+            ChangeNotifierProvider(create: (_)=> MemoryController()),
+            ChangeNotifierProvider(create: (_)=> SubscriptionPlansController()),
+            ChangeNotifierProvider(create: (_)=> PasswordController()),
           ],
           child:MaterialApp.router(
             debugShowCheckedModeBanner: false,

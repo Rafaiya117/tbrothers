@@ -39,6 +39,7 @@ class MemoryCard extends StatelessWidget {
       child:Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          SizedBox(height: 10.h,),
           Text(
             'Schedule on $date',
             textAlign: TextAlign.center,

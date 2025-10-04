@@ -1,16 +1,14 @@
 import 'package:appsoleum/core/components/custom_button.dart';
 import 'package:appsoleum/core/utils/theme.dart';
-import 'package:appsoleum/features/capture_message/controller/audio_recording_controller.dart';
 import 'package:appsoleum/features/capture_message/controller/video_recording_controller.dart';
 import 'package:appsoleum/features/capture_message/custom_widget/custom_audio_video_recorder.dart';
-import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
+import 'package:video_player/video_player.dart';
 
 class RecordVideo extends StatefulWidget {
   const RecordVideo({super.key});
@@ -21,92 +19,118 @@ class RecordVideo extends StatefulWidget {
 
 class _RecordVideoState extends State<RecordVideo> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final recordingController = Provider.of<VideoRecordingController>(context, listen: false);
+      recordingController.initCamera();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final recordingController = Provider.of<VideoRecordingController>(context);
-   return Scaffold(
+    final isVideoPlaying = recordingController.isPlayerReady 
+      ? recordingController.videoController!.value.isPlaying 
+      : false;
+    return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         width: double.infinity,
         //height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: AppGradientColors.background_color
-          ),
-          child: Padding(
-            padding:EdgeInsets.symmetric(vertical: 32.h),
-            child: Column(
-              children: [
-                Row(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.pop(context);
-                      },
-                      child:SvgPicture.asset(
-                        'assets/icons/arrow_back.svg',
-                        width: 16.w,
-                        height: 10.h,
+        decoration: BoxDecoration(
+          gradient: AppGradientColors.background_color 
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 32.h), 
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child:SvgPicture.asset(
+                      'assets/icons/arrow_back.svg',
+                      width: 16.w,
+                      height: 10.h,
+                    ),
+                  ),
+                  SizedBox(width:100.w),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Record Message",
+                      style: GoogleFonts.inter( 
+                        color: FontColors.text_colors, 
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18.sp,
                       ),
                     ),
-                    SizedBox(width:100.w),
-                    Align(
-                      alignment: Alignment.center,
-                        child: Text(
-                          "Record Message",
-                        style: GoogleFonts.inter(
-                          color: FontColors.text_colors,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18.sp,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width:50.w),
-                    IconButton(
-                      onPressed: (){}, 
-                      icon: Icon(Icons.more_vert_outlined, color:Color(0xFFFFFFFF) ,)
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20.h),
-                Stack(
-                  children: [
-                    Container(
-                    height: 530,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: FontColors.background_color,
-                    ),
-                    padding: const EdgeInsets.all(8),
+                  ),
+                  SizedBox(width:50.w),
+                  IconButton(
+                    onPressed: (){}, 
+                    icon: const Icon(Icons.more_vert_outlined, color:Color(0xFFFFFFFF) ,)
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+                Expanded(
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: FontColors.background_color,
+                  ),
+                  padding: const EdgeInsets.all(0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
                     child: Stack(
                       children: [
-                        Center(
-                          child:recordingController.cameraController != null &&
-                            recordingController.cameraController!.value.isInitialized
-                              ? AspectRatio(
-                                  aspectRatio: recordingController.cameraController!.value.aspectRatio,
-                                  child: CameraPreview(
-                                    recordingController.cameraController!,
-                                  ),
-                                )
-                              : const Center(
-                              child: CircularProgressIndicator(),
+                        if (recordingController.hasRecording && recordingController.isPlayerReady)
+                          Positioned.fill(
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: SizedBox(
+                                width: recordingController.videoController!.value.size.width,
+                                height: recordingController.videoController!.value.size.height,
+                                child: VideoPlayer(recordingController.videoController!),
+                              ),
                             ),
-                          ),
-                          // Top-right audio badge
-                          Positioned(
+                          )
+                        else if (recordingController.cameraController != null &&
+                            recordingController.cameraController!.value.isInitialized)
+                          Positioned.fill(
+                            child: CameraPreview(
+                              recordingController.cameraController!,
+                            ),
+                          )
+                        else
+                          const Center(
+                            child: CircularProgressIndicator(),
+                          ),                       
+                        Positioned(
                           top: 12,
                           right: 12,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 6,
+                            ),
                             decoration: BoxDecoration(
                               // ignore: deprecated_member_use
                               color: Colors.white.withOpacity(0.6),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.mic, color: Colors.white, size: 18),
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.mic,
+                                  color: Colors.black,
+                                  size: 18,
+                                ),
                                 SizedBox(width: 6),
                                 Text(
                                   "Video",
@@ -120,37 +144,41 @@ class _RecordVideoState extends State<RecordVideo> {
                             ),
                           ),
                         ),
-                        // Bottom-center timer
                         Positioned(
                           bottom: 16,
-                          left: 120,
-                          right: 120,
-                          child: 
-                          Container(
-                            width: 62,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.white,
-                            ),
-                            child: Center(
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.white,
+                              ),
                               child: Row(
-                                mainAxisSize: MainAxisSize.min, 
-                                mainAxisAlignment: MainAxisAlignment.center, 
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
-                                  width: 10,
-                                  height: 10,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.red,
-                                    shape: BoxShape.circle,
+                                    width: 10,
+                                    height: 10,
+                                    decoration: BoxDecoration(
+                                      color: recordingController.isRecording
+                                          ? Colors.red
+                                          : Colors.transparent,
+                                      shape: BoxShape.circle,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 6),
+                                  const SizedBox(width: 6),
                                   Text(
                                     recordingController.formatDuration(
                                       Duration(
-                                        milliseconds:(recordingController.progress*RecordingController.maxDuration.inMilliseconds).toInt(),
+                                        milliseconds: (recordingController.progress *
+                                        VideoRecordingController.maxDuration.inMilliseconds).toInt(),
                                       ),
                                     ),
                                     style: const TextStyle(
@@ -167,18 +195,23 @@ class _RecordVideoState extends State<RecordVideo> {
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
-              SizedBox(height:20.h),
-               RecordControlPanel(
+              SizedBox(height:20.h),              
+              RecordControlPanel( 
                 onRecord: () => recordingController.recordVideo(),
                 onReset: () => recordingController.reset(),
                 onDelete: () => recordingController.delete(),
                 isRecording: recordingController.isRecording,
                 progress: recordingController.progress,
-              ),
-              SizedBox(height: 20.h),
-              CustomRoundedButton(
+                
+                hasRecording: recordingController.hasRecording,
+                isPlayerPlaying: isVideoPlaying,
+                onPlay: () => recordingController.playVideo(),
+                onPause: () => recordingController.pauseVideo(),
+              ),              
+              SizedBox(height: 20.h),              
+              CustomRoundedButton( 
                 text: "Done",
                 backgroundColor: FontColors.button_color,
                 textColor: Colors.white,

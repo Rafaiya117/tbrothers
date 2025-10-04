@@ -1,6 +1,8 @@
 import 'package:appsoleum/core/components/custom_auth_button.dart';
+import 'package:appsoleum/core/components/custom_button.dart';
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/media_preview/widget/media_previw_widget.dart';
+import 'package:appsoleum/features/media_preview/widget/show_dialouge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -111,6 +113,15 @@ class CapsuleMemoryPreview extends StatelessWidget {
                     borderColor: Colors.transparent,
                   ),
                 ],
+              ),
+              SizedBox(height: 20.h,),
+              CustomRoundedButton(
+                text: "Send to Capsule",
+                backgroundColor: FontColors.button_color,
+                textColor: Colors.white,                           
+                onPressed: () {
+                  showSuccessDialog(context);
+                },
               ),
             ],
           ),

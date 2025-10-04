@@ -23,10 +23,16 @@ import 'package:appsoleum/features/home_page/view/home_page_view.dart';
 import 'package:appsoleum/features/landding/view/landing_page.dart';
 import 'package:appsoleum/features/legecy_home/appso_home.dart';
 import 'package:appsoleum/features/media_preview/view/capsule_memory_preview.dart';
+import 'package:appsoleum/features/memoriers/view/create_memory_post.dart';
+import 'package:appsoleum/features/memoriers/view/memory_post.dart';
 import 'package:appsoleum/features/onboarding_one/view/onboarding_one_view.dart';
+import 'package:appsoleum/features/privacy_policy/privacy_policy.dart';
 import 'package:appsoleum/features/profile/view/account_information_view.dart';
 import 'package:appsoleum/features/profile/view/edit_account_info.dart';
+import 'package:appsoleum/features/profile/view/edit_password.dart';
 import 'package:appsoleum/features/profile/view/profile_settings.dart';
+import 'package:appsoleum/features/subscription_plan/view/subscription_plan.dart';
+import 'package:appsoleum/features/terms_and_condition/terms_and_condition.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -42,7 +48,10 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/login_page',
-      builder: (context, state) => LoginView(),
+      builder: (context, state) {
+        final accountType = state.extra as String;
+        return LoginView(accountType: accountType);
+      },
     ),
     GoRoute(
       path: '/sigup_page',
@@ -147,6 +156,30 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/legecy_screen',
       builder: (context, state) => LegacyScreen(),
+    ),
+    GoRoute(
+      path: '/memory_post',
+      builder: (context, state) => MemoryPost(),
+    ),
+    GoRoute(
+      path: '/subscription_plan',
+      builder: (context, state) => SubscriptionPlansPage(),
+    ),
+    GoRoute(
+      path: '/edit_password',
+      builder: (context, state) => EditPasswordPage(),
+    ),
+    GoRoute(
+      path: '/terms_condition',
+      builder: (context, state) => TermsConditionsPage(),
+    ),
+    GoRoute(
+      path: '/privacy_policy',
+      builder: (context, state) => PrivacyAndPolicy(),
+    ),
+    GoRoute(
+      path: '/create_post',
+      builder: (context, state) => CreatePostPage(),
     ),
   ],
 );

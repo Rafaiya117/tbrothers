@@ -86,10 +86,10 @@ class CustomBottomNavBar extends StatelessWidget {
         // Navigation logic
         switch (index) {
           case 0:
-            Navigator.pushReplacementNamed(context, '/home');
+            context.push('/home');
             break;
           case 1:
-            Navigator.pushReplacementNamed(context, '/care');
+            context.push('/memory_post');
             break;
           case 2:
              context.push('/capsule_preview');

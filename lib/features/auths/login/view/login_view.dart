@@ -13,7 +13,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+  final String accountType;
+  const LoginView({super.key, required this.accountType});
 
   @override
   Widget build(BuildContext context) {
@@ -170,12 +171,17 @@ class LoginView extends StatelessWidget {
                         CustomRoundedButton(
                           text: "Log in",
                           backgroundColor: FontColors.button_color,
-                            textColor: Colors.white,
-                              onPressed: () {
-                                //context.push('/home_page');
-                                context.push('/legecy_screen');
-                              },
-                            ),
+                            textColor: Colors.white,                           
+                            onPressed: () {
+                            if (accountType == "legacy") {
+                              context.push('/legecy_screen');
+                            } else if (accountType == "creator") {
+                              context.push('/creator_screen');
+                            } else if (accountType == "beneficiary") {
+                              context.push('/home_page');
+                            }
+                          },
+                        ),
                           SizedBox(height:10.h),
                           Text(
                             "or Continue with",

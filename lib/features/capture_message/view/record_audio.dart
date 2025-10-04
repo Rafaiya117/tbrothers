@@ -74,17 +74,7 @@ class _RecordAudioState extends State<RecordAudio> {
                     padding: const EdgeInsets.all(8),
                     child: Stack(
                       children: [
-                        // Center waveform
-                        // Video preview instead of waveform
-                      Center(
-                        child: recordingController.cameraController != null &&
-                        recordingController.cameraController!.value.isInitialized
-                      ? AspectRatio(
-                        aspectRatio:recordingController.cameraController!.value.aspectRatio,
-                        child: CameraPreview(recordingController.cameraController!),
-                      )
-                       : const Center(child: CircularProgressIndicator()),
-                      ),
+                       const Center(child: CircularProgressIndicator()),                      
                         // Top-right audio badge
                         Positioned(
                           top: 12,
@@ -101,7 +91,7 @@ class _RecordAudioState extends State<RecordAudio> {
                                 Icon(Icons.mic, color: Colors.white, size: 18),
                                 SizedBox(width: 6),
                                 Text(
-                                  "Video",
+                                  "Audio",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600,
@@ -167,7 +157,10 @@ class _RecordAudioState extends State<RecordAudio> {
                 onReset: () => recordingController.reset(),
                 onDelete: () => recordingController.delete(),
                 isRecording: recordingController.isRecording,
-                progress: recordingController.progress,
+                progress: recordingController.progress, 
+                isPlayerPlaying: false, 
+                onPlay: () {  }, 
+                onPause: () {  },
               ),
               SizedBox(height: 20.h),
               CustomRoundedButton(
