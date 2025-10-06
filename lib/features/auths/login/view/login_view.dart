@@ -174,7 +174,8 @@ class LoginView extends StatelessWidget {
                             textColor: Colors.white,                           
                             onPressed: () {
                             if (accountType == "legacy") {
-                              context.push('/legecy_screen');
+                              //context.push('/legecy_screen');
+                              context.push('/legecy_home');
                             } else if (accountType == "creator") {
                               context.push('/creator_screen');
                             } else if (accountType == "beneficiary") {

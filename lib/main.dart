@@ -13,6 +13,7 @@ import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/ti
 import 'package:appsoleum/features/home_page/controller/home_page_controller.dart';
 import 'package:appsoleum/features/home_page/controller/media_player_controller.dart';
 import 'package:appsoleum/features/landding/controller/landing_page_controller.dart';
+import 'package:appsoleum/features/legecy_profile/controller/edit_profile_image_controller.dart';
 import 'package:appsoleum/features/memoriers/controller/memory_controller.dart';
 import 'package:appsoleum/features/onboarding_one/controller/onboarding_one_controller.dart';
 import 'package:appsoleum/features/profile/controller/edit_controller.dart';
@@ -81,6 +82,7 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_)=> MemoryController()),
             ChangeNotifierProvider(create: (_)=> SubscriptionPlansController()),
             ChangeNotifierProvider(create: (_)=> PasswordController()),
+            ChangeNotifierProvider(create: (_)=> EditProfileController()),
           ],
           child:MaterialApp.router(
             debugShowCheckedModeBanner: false,

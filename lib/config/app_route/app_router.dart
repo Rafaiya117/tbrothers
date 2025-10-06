@@ -22,6 +22,8 @@ import 'package:appsoleum/features/gallary_and_timeline/time_lines/view/timeline
 import 'package:appsoleum/features/home_page/view/home_page_view.dart';
 import 'package:appsoleum/features/landding/view/landing_page.dart';
 import 'package:appsoleum/features/legecy_home/appso_home.dart';
+import 'package:appsoleum/features/legecy_home/legecy_home.dart';
+import 'package:appsoleum/features/legecy_profile/legacy_edit_profile.dart';
 import 'package:appsoleum/features/media_preview/view/capsule_memory_preview.dart';
 import 'package:appsoleum/features/memoriers/view/create_memory_post.dart';
 import 'package:appsoleum/features/memoriers/view/memory_post.dart';
@@ -180,6 +182,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/create_post',
       builder: (context, state) => CreatePostPage(),
+    ),
+    GoRoute(
+      path: '/legecy_home',
+      builder: (context, state) => ProfilePage(),
+    ),
+    GoRoute(
+      path: '/legacy_edit_profile',
+      builder: (context, state) => EditProfilePage(),
     ),
   ],
 );

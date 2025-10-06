@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
   Widget _buildSocialIcon(String svgAssetPath) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.only(left: 6.0),
       child: SvgPicture.asset(
         svgAssetPath,
         colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-        height: 24,
-        width: 24,
+        height: 16, 
+        width: 16,
       ),
     );
   }
@@ -23,7 +25,7 @@ class ProfilePage extends StatelessWidget {
             color: Color(0xFF4A90E2),
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: Colors.white, size: 28),
+          child: Icon(icon, color: Colors.white, size: 16),
         ),
         SizedBox(height: 8),
         Text(
@@ -48,8 +50,8 @@ class ProfilePage extends StatelessWidget {
       children: [
         _buildLegacyFeatureItem(Icons.mic, 'Appso\nMessages'),
         _buildLegacyFeatureItem(Icons.public, 'Appso\nConnects'),
-        _buildLegacyFeatureItem(Icons.book, 'Appso\nInterviews'),
-        _buildLegacyFeatureItem(Icons.wifi_tethering, 'Appso\nLive'),
+        _buildLegacyFeatureItem(Icons.book_sharp, 'Appso\nInterviews'),
+        _buildLegacyFeatureItem(Icons.signal_cellular_alt, 'Legacy\nLive'),
       ],
     );
   }
@@ -81,7 +83,6 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildLegacyLineGrid() {
     return GridView.count(
       shrinkWrap: true,
@@ -99,88 +100,193 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF1E2129),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 250.0,
-            floating: false,
-            pinned: true,
-            backgroundColor: Color(0xFF1E2129),
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF2B78E4),
-                      Color(0xFF4A90E2),
-                    ],
-                  ),
+  Widget _buildCaptureLegacyButton() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 20),
+      height: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        gradient: LinearGradient(
+          colors: [Color(0xFFFF7A00), Color(0xFFFF5200)],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {},
+          borderRadius: BorderRadius.circular(25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.add, color: Colors.white),
+              SizedBox(width: 8),
+              Text(
+                'Capture Legacy',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                child: Stack(
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfileDetailsCard(BuildContext context) {
+    const Color cardColor = Color(0xFF2C3038);
+    return Container(
+      margin: const EdgeInsets.only(top: 70), 
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: cardColor,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Name and Social Icons Row
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 👇 CORRECTED: Using Opacity widget instead of the invalid property
-                    Positioned.fill(
-                      child: Opacity(
-                        opacity: 0.2, // Set the desired opacity here
-                        child: Image.asset(
-                          'assets/profile_bg.png',
-                          fit: BoxFit.cover,
-                        ),
+                    Text(
+                      'Tom Hayden',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    // ... (rest of the Stack children remain the same)
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF1E2129),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 20.0),
-                        child: Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            CircleAvatar(
-                              radius: 70,
-                              backgroundImage: Image.asset('assets/profile_pic.png').image,
-                            ),
-                            Positioned(
-                              right: 0,
-                              bottom: 0,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[700],
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                padding: EdgeInsets.all(8),
-                                child: Icon(Icons.edit, color: Colors.white, size: 20),
-                              ),
-                            ),
-                          ],
-                        ),
+                    SizedBox(height: 5),
+
+                    // Job Title/Company
+                    Text(
+                      'Senior Business Analyst, KNAlytics',
+                      style: TextStyle(
+                        color: Colors.grey[400],
+                        fontSize: 14,
                       ),
                     ),
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0), 
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    _buildSocialIcon('assets/icons/facebook.svg'),
+                    _buildSocialIcon('assets/icons/twiter.svg'),
+                    _buildSocialIcon('assets/icons/linkedin.svg'),
+                    _buildSocialIcon('assets/icons/insta_icon.svg'), 
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(Icons.email, color: Colors.grey[400], size: 18),
+              SizedBox(width: 8),
+              Text(
+                'tom.hey1983@gmail.com',
+                style: TextStyle(
+                  color: Colors.grey[400],
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAppBarBackground(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF2B78E4),
+                Color(0xFF4A90E2),
+              ],
             ),
+          ),
+        ),
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images/apsso.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned(
+          right: 16, 
+          bottom: 16,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white, 
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.edit, color: Colors.grey[700], size: 16),
+                SizedBox(width: 4),
+                Text(
+                  'Edit',
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    const Color scaffoldBackgroundColor = Color(0xFF1E2129);
+    const double appBarExpandedHeight = 280.0;
+    const double cardOverlap = 50.0;
+
+    return Scaffold(
+      backgroundColor: scaffoldBackgroundColor,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: appBarExpandedHeight, 
+            floating: false,
+            pinned: true,
+            elevation: 0,
+            backgroundColor: scaffoldBackgroundColor,
+            
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {},
@@ -188,68 +294,41 @@ class ProfilePage extends StatelessWidget {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 16.0),
-                child: Icon(Icons.person_add_alt_1, color: Colors.white, size: 28),
+                child:IconButton(
+                  onPressed: (){
+                    context.push('/legacy_edit_profile');
+                  }, 
+                  icon: SvgPicture.asset(
+                    'assets/icons/legecy_profile_edit_icon.svg',
+                    width: 20.w,
+                    height: 20.h,
+                  )
+                )
               ),
             ],
+
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: EdgeInsets.zero,
+              background: _buildAppBarBackground(context), 
+            ),
           ),
+
           SliverList(
             delegate: SliverChildListDelegate(
               [
+                Transform.translate(
+                  offset: const Offset(0.0, -cardOverlap),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: _buildProfileDetailsCard(context),
+                  ),
+                ),
+
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Tom Hayden',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'Senior Business Analysis',
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildSocialIcon('assets/icons/facebook.svg'),
-                                _buildSocialIcon('assets/icons/discord.svg'),
-                                _buildSocialIcon('assets/icons/linkedin.svg'),
-                                _buildSocialIcon('assets/icons/instagram.svg'),
-                              ],
-                            ),
-                            SizedBox(height: 15),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.email, color: Colors.grey[400], size: 20),
-                                SizedBox(width: 8),
-                                Text(
-                                  'tom.hey1983@gmail.com',
-                                  style: TextStyle(
-                                    color: Colors.grey[400],
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 30),
-                      Divider(color: Colors.grey[700]),
-                      SizedBox(height: 15),
                       Center(
                         child: Text(
                           'My Legacy',
@@ -261,30 +340,33 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 15),
-                      Text(
-                        'Thanks for coming by and checking out my legacy,\nsurely I live a interesting life and I am so glad that\nmy adventures, education, life experiences ',
-                        style: TextStyle(
-                          color: Colors.grey[400],
-                          fontSize: 15,
-                          height: 1.4,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          // Handle "More..." tap
-                        },
-                        child: Text(
-                          'More...',
+                      Divider(color: Colors.grey[700]),
+                      SizedBox(height: 15),
+                      Text.rich(
+                        TextSpan(
+                          text: 'Thanks for coming by and checking out my legacy,\nsurely I live a interesting life and I am so glad that\nmy adventures, education, life experiences ',
                           style: TextStyle(
-                            color: Color(0xFF4A90E2),
+                            color: Colors.grey[400],
                             fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                            height: 1.4,
                           ),
+                          children: [
+                            TextSpan(
+                              text: 'More...',
+                              style: TextStyle(
+                                color: Color(0xFF4A90E2),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
+                        textAlign: TextAlign.start,
                       ),
-                      SizedBox(height: 30),
+
+                      SizedBox(height: 20),
                       _buildLegacyFeaturesGrid(),
-                      SizedBox(height: 30),
+                      SizedBox(height: 20),
                       Text(
                         'Legacy Line',
                         style: TextStyle(
@@ -295,7 +377,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       _buildLegacyLineGrid(),
-                      SizedBox(height: 20),
+                      _buildCaptureLegacyButton(),
                     ],
                   ),
                 ),
