@@ -93,7 +93,7 @@ class CustomTextField extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                     fontSize: 12.sp,
                   ),
-                  textAlign: TextAlign.center,
+                  //textAlign: TextAlign.center,
                 ),
               );
             },

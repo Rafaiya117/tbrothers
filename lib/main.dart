@@ -1,5 +1,6 @@
 import 'package:appsoleum/config/app_route/app_router.dart';
 import 'package:appsoleum/config/connectvity/no_connectvity.dart';
+import 'package:appsoleum/features/auths/complete_profile/controller/profile_video_uploader_controller.dart';
 import 'package:appsoleum/features/capture_message/controller/audio_recording_controller.dart';
 import 'package:appsoleum/features/capture_message/controller/capture_controller.dart';
 import 'package:appsoleum/features/auths/complete_profile/controller/profile_image_upload_controller.dart';
@@ -65,6 +66,7 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create:(_)=>LandingController()),
             ChangeNotifierProvider(create:(_)=>OnboardingOneController()),
             ChangeNotifierProvider(create: (_)=>ProfileImageUploadController()),
+            ChangeNotifierProvider(create: (_)=>ProfileVideoUploaderController()),
             ChangeNotifierProvider(create: (_) => HomePageController()),
             ChangeNotifierProvider(create: (_) => CaptureController()),
             ChangeNotifierProvider(create: (_) => RecordingController()),
