@@ -77,7 +77,7 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
         backgroundColor: const Color(0xFF0F4C82),
         elevation: 0,
         leading: IconButton(
-          icon: SvgPicture.asset('assets/back_arrow.svg', colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+          icon: SvgPicture.asset('assets/icons/arrow_back.svg', colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
           onPressed: () {}, 
         ),
         title: const Text(
@@ -87,13 +87,13 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: SvgPicture.asset('assets/search_icon.svg', colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+            icon: SvgPicture.asset('assets/icons/search_icon.svg', colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
             onPressed: () {}, 
           ),
         ],
       ),
       body: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
         itemCount: _connections.length,
         itemBuilder: (context, index) {
           final connection = _connections[index];
@@ -105,27 +105,33 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
 
   Widget _buildConnectionCard(Connection connection) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      //margin: const EdgeInsets.symmetric(vertical: 5.0),
       padding: const EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1976D2), 
-        borderRadius: BorderRadius.circular(15.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      // decoration: BoxDecoration(
+      //   color: const Color(0xFF1976D2), 
+      //   borderRadius: BorderRadius.circular(15.0),
+      //   boxShadow: [
+      //     BoxShadow(
+      //       color: Colors.black.withOpacity(0.1),
+      //       spreadRadius: 1,
+      //       blurRadius: 3,
+      //       offset: const Offset(0, 2),
+      //     ),
+      //   ],
+      // ),
       child: Row(
         children: [
-          // Profile Picture
-          CircleAvatar(
-            radius: 28,
-            backgroundImage: AssetImage(connection.profilePicAsset),
-            backgroundColor: Colors.grey.shade300, 
+          Container(
+            width: 56, 
+            height: 56,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12), 
+              color: Colors.grey.shade300,
+              image: DecorationImage(
+                image: AssetImage(connection.profilePicAsset),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           const SizedBox(width: 15),
           Expanded(
@@ -144,6 +150,7 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                 Text(
                   connection.username,
                   style: TextStyle(
+                    // ignore: deprecated_member_use
                     color: Colors.white.withOpacity(0.7),
                     fontSize: 14,
                   ),
@@ -151,26 +158,42 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
               ],
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              print('${connection.name} button tapped!');
-              setState(() {
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: connection.isConnected ? Colors.orange.shade700 : const Color(0xFF0F4C82), // Orange for Connected, Deep Blue for Following
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+          SizedBox(
+            width: 140,
+            height: 40,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: connection.isConnected
+                    ? const LinearGradient(
+                        colors: [Color(0xFFFF8740), Color(0xFFFDAE57)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      )
+                    : null,
+                color: connection.isConnected ? null : const Color(0xFF0F4C82),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: connection.isConnected
+                      ? Colors.transparent
+                      : Colors.white,
+                  width: 1.5,
+                ),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-              elevation: 0, 
-            ),
-            child: Text(
-              connection.isConnected ? 'Connected' : 'Following',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Your onPressed logic
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  connection.isConnected ? "Connected" : "Follow",
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ),

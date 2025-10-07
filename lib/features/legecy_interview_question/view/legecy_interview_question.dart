@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class InterviewScreen extends StatefulWidget {
   @override
@@ -20,26 +21,18 @@ class _InterviewScreenState extends State<InterviewScreen> {
   int? _selectedQuestionIndex = 0; 
 
   // --- MODAL IMPLEMENTATION ---
-  void _showAnswerModal(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(25.0),
-          topRight: Radius.circular(25.0),
+void _showAnswerModal(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierColor: Colors.black.withOpacity(0.5), // optional dim background
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0),
         ),
-      ),
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Container(
+        backgroundColor: Colors.white,
+        child: Padding(
           padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
-            color: Colors.white, 
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.0),
-              topRight: Radius.circular(25.0),
-            ),
-          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -70,9 +63,11 @@ class _InterviewScreenState extends State<InterviewScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(right: 8.0),
                       child: ElevatedButton.icon(
-                        onPressed: () => Navigator.pop(context), 
+                        onPressed: (){
+                          context.push('/appso_questions_video_recording');
+                        },
                         icon: SvgPicture.asset(
-                          'assets/video_camera_icon.svg', // Your Video SVG icon
+                          'assets/video_camera_icon.svg',
                           colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                           height: 24,
                         ),
@@ -81,7 +76,7 @@ class _InterviewScreenState extends State<InterviewScreen> {
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFFF8542), // Orange color
+                          backgroundColor: const Color(0xFFFF8542), // Orange
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -95,9 +90,11 @@ class _InterviewScreenState extends State<InterviewScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: ElevatedButton.icon(
-                        onPressed: () => Navigator.pop(context), 
+                        onPressed: () {
+                          context.push('/appso_questions_audio_recording');
+                        },
                         icon: SvgPicture.asset(
-                          'assets/microphone_icon.svg', 
+                          'assets/microphone_icon.svg',
                           colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                           height: 24,
                         ),
@@ -106,7 +103,7 @@ class _InterviewScreenState extends State<InterviewScreen> {
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF1976D2), 
+                          backgroundColor: const Color(0xFF1976D2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -120,11 +117,13 @@ class _InterviewScreenState extends State<InterviewScreen> {
               const SizedBox(height: 20),
             ],
           ),
-        );
-      },
-    );
-  }
-  // --- END MODAL IMPLEMENTATION ---
+        ),
+      );
+    },
+  );
+}
+// --- END MODAL IMPLEMENTATION ---
+
 
 
   Widget _buildQuestionCard(String question, int index) {
@@ -140,7 +139,7 @@ class _InterviewScreenState extends State<InterviewScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
         decoration: BoxDecoration(
-          color: const Color(0xFF1976D2), 
+          color: Colors.white, 
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -161,7 +160,7 @@ class _InterviewScreenState extends State<InterviewScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? Colors.orange.shade700 : Colors.white,
+                  color: isSelected ? Colors.orange.shade700 : Colors.black,
                   width: 2,
                 ),
                 color: isSelected ? Colors.orange.shade700 : Colors.transparent,
@@ -171,8 +170,8 @@ class _InterviewScreenState extends State<InterviewScreen> {
                   child: Container(
                     width: 10,
                     height: 10,
-                     decoration: const BoxDecoration(
-                      color: Colors.white, 
+                     decoration: BoxDecoration(
+                      color: Colors.orange.shade700, 
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -183,14 +182,14 @@ class _InterviewScreenState extends State<InterviewScreen> {
             Expanded(
               child: Text(
                 question,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: const TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
             SvgPicture.asset(
-              'assets/arrow_right.svg', 
-              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-              width: 20,
-              height: 20,
+              'assets/icons/arrow_right.svg', 
+              colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+              width: 16,
+              height: 16,
             ),
           ],
         ),
@@ -206,7 +205,7 @@ class _InterviewScreenState extends State<InterviewScreen> {
         backgroundColor: const Color(0xFF0F4C82), 
         elevation: 0,
         leading: IconButton(
-          icon: SvgPicture.asset('assets/back_arrow.svg', colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+          icon: SvgPicture.asset('assets/icons/arrow_back.svg', colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
@@ -225,7 +224,7 @@ class _InterviewScreenState extends State<InterviewScreen> {
               width: 120, 
               height: 120, 
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color(0xFFFFE3D2),
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
@@ -238,7 +237,7 @@ class _InterviewScreenState extends State<InterviewScreen> {
               ),
               padding: const EdgeInsets.all(15), 
               child: Image.asset(
-                'assets/interview_icon.png', // Your central image asset
+                'assets/images/in_logo.png', 
                 fit: BoxFit.contain,
               ),
             ),

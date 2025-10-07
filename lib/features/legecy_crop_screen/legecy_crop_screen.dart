@@ -7,7 +7,7 @@ import 'package:image_cropper/image_cropper.dart';
 class EditPhotoPage extends StatefulWidget {
   final XFile imageFile;
 
-  const EditPhotoPage({Key? key, required this.imageFile}) : super(key: key);
+  const EditPhotoPage({Key? key, required this.imageFile, required String imagePath}) : super(key: key);
 
   @override
   State<EditPhotoPage> createState() => _EditPhotoPageState();

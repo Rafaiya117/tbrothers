@@ -68,7 +68,7 @@ class CreateCapsuleImageView extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                       child: Text(
-                        "Your legacy is growung",
+                        "Your legacy is growing",
                           style: GoogleFonts.inter(
                           color: FontColors.disable_text,
                           fontWeight: FontWeight.normal,

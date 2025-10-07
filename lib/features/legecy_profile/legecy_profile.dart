@@ -1,5 +1,7 @@
+import 'package:appsoleum/features/legecy_profile/controller/edit_profile_image_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   // Helper method for stats
@@ -26,19 +28,49 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // Helper method for filter buttons
-  Widget _buildFilterButton(String text) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2), // Semi-transparent white
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(color: Colors.white, fontSize: 16),
+  // Widget _buildFilterButton(String text) {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+  //     decoration: BoxDecoration(
+  //       color: Colors.white.withOpacity(0.2),
+  //       borderRadius: BorderRadius.circular(20),
+  //     ),
+  //     child: Text(
+  //       text,
+  //       style: TextStyle(color: Colors.white, fontSize: 16),
+  //     ),
+  //   );
+  // }
+
+  // EditProfilePage (Updated _buildFilterButton)
+
+Widget _buildFilterButton(BuildContext context, String text, bool isSelected) {
+    final controller = Provider.of<EditProfileController>(context, listen: false);
+    final GlobalKey? key = controller.filterButtonKeys[text];
+    
+    if (key == null) {
+      print('Error: Filter key for "$text" not found in controller.filterButtonKeys.');
+      return Container(); 
+    }
+    return GestureDetector(
+      onTap: () async {
+        await controller.showFilterPopup(context, key, text);
+      },
+      child: Container(
+        key: key,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFFFF7A00) : Colors.white.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white, fontSize: 16),
+        ),
       ),
     );
   }
+
 
   // Helper method for comments
   Widget _buildComment(String avatarAsset, String name, String commentText, bool isAudio, String timestamp) {
@@ -165,13 +197,22 @@ class ProfileScreen extends StatelessWidget {
                 // Filter Buttons
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _buildFilterButton('Education'),
-                      _buildFilterButton('Family'),
-                      _buildFilterButton('Love & Relationship'),
-                    ],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal, 
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _buildFilterButton(context,'Education',false),
+                        const SizedBox(width: 8), 
+                        _buildFilterButton(context,'Family',true),
+                        const SizedBox(width: 8), 
+                        _buildFilterButton(context,'Love & Relationship',false),
+                        const SizedBox(width: 8),
+                        _buildFilterButton(context,'Career',false),
+                        const SizedBox(width: 8),
+                        _buildFilterButton(context,'Health',false),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 20),

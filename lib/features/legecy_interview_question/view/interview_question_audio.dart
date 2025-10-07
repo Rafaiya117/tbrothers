@@ -2,25 +2,27 @@ import 'package:appsoleum/core/components/custom_button.dart';
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/capture_message/controller/audio_recording_controller.dart';
 import 'package:appsoleum/features/capture_message/custom_widget/custom_audio_video_recorder.dart';
+import 'package:appsoleum/features/legecy_interview_question/controller/interview_audio_controller.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-
-class RecordAudio extends StatefulWidget {
-  const RecordAudio({super.key});
+class InterviewRecordAudio extends StatefulWidget {
+  final String question;
+  const InterviewRecordAudio({super.key,required this.question,});
 
   @override
-  State<RecordAudio> createState() => _RecordAudioState();
+  State<InterviewRecordAudio> createState() => _InterviewRecordAudioState();
 }
 
-class _RecordAudioState extends State<RecordAudio> {
+class _InterviewRecordAudioState extends State<InterviewRecordAudio> {
   @override
   Widget build(BuildContext context) {
-    final recordingController = Provider.of<RecordingController>(context);
+    final recordingController = Provider.of<InterviewAudioController>(context);
 
     return Scaffold(
       body: Container(
@@ -191,7 +193,7 @@ class _RecordAudioState extends State<RecordAudio> {
                                     recordingController.formatDuration(
                                       Duration(
                                         milliseconds: (recordingController.progress *
-                                          RecordingController.maxDuration.inMilliseconds).toInt(),
+                                          InterviewAudioController.maxDuration.inMilliseconds).toInt(),
                                       ),
                                     ),
                                     style: const TextStyle(
@@ -231,7 +233,7 @@ class _RecordAudioState extends State<RecordAudio> {
                 backgroundColor: FontColors.button_color,
                 textColor: Colors.white,
                 onPressed: () {
-                  // context.push('/home_page');
+                  context.push('/appso_archive_interview');
                 },
               ),
             ],

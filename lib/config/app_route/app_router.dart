@@ -21,9 +21,17 @@ import 'package:appsoleum/features/gallary_and_timeline/time_lines/view/time_lin
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/view/timeline_video.dart';
 import 'package:appsoleum/features/home_page/view/home_page_view.dart';
 import 'package:appsoleum/features/landding/view/landing_page.dart';
-import 'package:appsoleum/features/legecy_home/appso_home.dart';
+import 'package:appsoleum/features/legacy_interview_archived/legecy_interview_archived.dart';
+import 'package:appsoleum/features/legacy_take_photo/view/capture_legecy_video.dart';
+import 'package:appsoleum/features/legecy_appso_connects/legecy_appso_connects.dart';
+import 'package:appsoleum/features/legecy_appso_message/legacy_text_message.dart';
 import 'package:appsoleum/features/legecy_home/legecy_home.dart';
+import 'package:appsoleum/features/legecy_interview_question/view/interview_question_audio.dart';
+import 'package:appsoleum/features/legecy_interview_question/view/interview_question_videorecording.dart';
+import 'package:appsoleum/features/legecy_interview_question/view/legecy_interview_question.dart';
 import 'package:appsoleum/features/legecy_profile/legacy_edit_profile.dart';
+import 'package:appsoleum/features/legecy_profile/legecy_profile.dart';
+import 'package:appsoleum/features/legacy_take_photo/view/legecy_take_photo.dart';
 import 'package:appsoleum/features/media_preview/view/capsule_memory_preview.dart';
 import 'package:appsoleum/features/memoriers/view/create_memory_post.dart';
 import 'package:appsoleum/features/memoriers/view/memory_post.dart';
@@ -156,10 +164,6 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => EditAccountInfo(),
     ),
     GoRoute(
-      path: '/legecy_screen',
-      builder: (context, state) => LegacyScreen(),
-    ),
-    GoRoute(
       path: '/memory_post',
       builder: (context, state) => MemoryPost(),
     ),
@@ -190,6 +194,42 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/legacy_edit_profile',
       builder: (context, state) => EditProfilePage(),
+    ),
+     GoRoute(
+      path: '/appso_page',
+      builder: (context, state) => ProfileScreen(),
+    ),
+    GoRoute(
+      path: '/legecy_take_photo',
+      builder: (context, state) => CameraPage(),
+    ),
+    GoRoute(
+      path: '/legecy_captured_video',
+      builder: (context, state) => LegecyCaptureVideo(),
+    ),
+    GoRoute(
+      path: '/appso_connection',
+      builder: (context, state) => MyConnectionsScreen(),
+    ),
+    GoRoute(
+      path: '/appso_questions',
+      builder: (context, state) => InterviewScreen(),
+    ),
+    GoRoute(
+      path: '/appso_questions_video_recording',
+      builder: (context, state) => VideoRecorderScreen(question: '',),
+    ),
+    GoRoute(
+      path: '/appso_questions_audio_recording',
+      builder: (context, state) => InterviewRecordAudio(question: '',),
+    ),
+    GoRoute(
+      path: '/appso_text_message',
+      builder: (context, state) => AppsoMessagePage(),
+    ),
+    GoRoute(
+      path: '/appso_archive_interview',
+      builder: (context, state) => ArchiveInterviewScreen(),
     ),
   ],
 );

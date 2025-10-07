@@ -1,6 +1,8 @@
 import 'package:appsoleum/features/legecy_profile/controller/edit_profile_image_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -110,14 +112,13 @@ class EditProfilePage extends StatelessWidget {
           const Color scaffoldBackgroundColor = Color(0xFF1E2129);
           const Color appBarColor = Color(0xFF2B78E4);
           const Color formContainerColor = Color(0xFF23262F);
-          
+
           // Get the controller instance for method calls (listen: false)
           final controller = Provider.of<EditProfileController>(context, listen: false);
 
           return Scaffold(
-            backgroundColor: scaffoldBackgroundColor,
+            backgroundColor: Color(0xFF030728),
             appBar: AppBar(
-              backgroundColor: appBarColor,
               elevation: 0,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -134,14 +135,24 @@ class EditProfilePage extends StatelessWidget {
                 ),
               ),
               centerTitle: true,
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF2B6CA3), 
+                      Color(0xFF0F4C82),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+              ),
             ),
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  // 2. Profile Image Section: Use Consumer to listen for image changes
                   Consumer<EditProfileController>(
                     builder: (context, controller, child) {
-                      // Logic to switch between selected file and default asset
                       Widget profileImageWidget;
                       if (controller.imageFile != null) {
                         profileImageWidget = Image.file(
@@ -150,7 +161,7 @@ class EditProfilePage extends StatelessWidget {
                         );
                       } else {
                         profileImageWidget = Image.asset(
-                          'assets/profile_pic.png',
+                          'assets/images/profile_image.png',
                           fit: BoxFit.cover,
                         );
                       }
@@ -163,15 +174,14 @@ class EditProfilePage extends StatelessWidget {
                           alignment: Alignment.bottomCenter,
                           children: [
                             Positioned.fill(
-                              child: profileImageWidget, // Displays the current image
+                              child: profileImageWidget, 
                             ),
                             Positioned(
                               bottom: 20,
                               child: ElevatedButton.icon(
-                                // 3. Call the controller's image picking method
-                                onPressed:() {
-                                  controller.pickImageAndNavigateToCrop(context);
-                                }, 
+                                onPressed: () {
+                                  controller.pickImageAndNavigateToCrop(context, ImageSource.gallery);
+                                },
                                 icon: const Icon(Icons.edit, color: Colors.grey, size: 18),
                                 label: Text(
                                   'Edit image',
@@ -194,53 +204,73 @@ class EditProfilePage extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   // Form Section (No unnecessary changes)
-                  Container(
-                    padding: const EdgeInsets.all(16.0),
-                    margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                    decoration: BoxDecoration(
-                      color: formContainerColor,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildTextField(label: 'Name', initialValue: 'Tom Hayden'),
-                        _buildTextField(label: 'Job Title', initialValue: 'Senior Business Analysis'),
-                        _buildTextField(label: 'Email', initialValue: 'tom.hey1983@gmail.com', keyboardType: TextInputType.emailAddress),
-                        
-                        // Bio Field
-                        const Text('Bio', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
-                        const SizedBox(height: 8),
-                        TextFormField(
-                          maxLines: 4,
-                          maxLength: 150,
-                          style: const TextStyle(color: Colors.white),
-                          cursorColor: Colors.white,
-                          decoration: InputDecoration(
-                            hintText: 'Add description....',
-                            hintStyle: const TextStyle(color: Colors.grey),
-                            filled: true,
-                            fillColor: const Color(0xFF2E323E),
-                            contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide.none,),
-                            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide.none,),
-                            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 1.5),),
-                            counterStyle: const TextStyle(color: Colors.grey, fontSize: 12),
-                            alignLabelWithHint: true,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        
-                        const Text('Link Accounts', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
-                        const SizedBox(height: 16),
+                  // Container(
+                  //   padding: const EdgeInsets.all(16.0),
+                  //   margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  //   decoration: BoxDecoration(
+                  //     color: formContainerColor,
+                  //     borderRadius: BorderRadius.circular(15),
+                  //   ),
+                  //   child: 
+                  // ),
 
-                        _buildSocialLinkField(svgAssetPath: 'assets/icons/facebook.svg', hintText: 'facebook.com/', initialValue: 'facebook.com/'),
-                        _buildSocialLinkField(svgAssetPath: 'assets/icons/instagram.svg', hintText: 'instagram.com/', initialValue: 'instagram.com/'),
-                        _buildSocialLinkField(svgAssetPath: 'assets/icons/x.svg', hintText: 'x.com/', initialValue: 'x.com/'),
-                        _buildSocialLinkField(svgAssetPath: 'assets/icons/linkedin.svg', hintText: 'linkedin.com/', initialValue: 'linkedin.com/'),
-                        _buildSocialLinkField(svgAssetPath: 'assets/icons/tiktok.svg', hintText: 'tiktok.com/', initialValue: 'tiktok.com/'),
-                      ],
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildTextField(label: 'Name', initialValue: 'Tom Hayden'),
+                          _buildTextField(label: 'Job Title', initialValue: 'Senior Business Analysis'),
+                          _buildTextField(label: 'Email', initialValue: 'tom.hey1983@gmail.com', keyboardType: TextInputType.emailAddress),
+                    
+                          // Bio Field
+                          const Text(
+                            'Bio',
+                            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(height: 8),
+                          TextFormField(
+                            maxLines: 4,
+                            maxLength: 150,
+                            style: const TextStyle(color: Colors.white),
+                            cursorColor: Colors.white,
+                            decoration: InputDecoration(
+                              hintText: 'Add description....',
+                              hintStyle: const TextStyle(color: Colors.grey),
+                              filled: true,
+                              fillColor: const Color(0xFF2E323E),
+                              contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(color: Color(0xFF4A90E2), width: 1.5),
+                              ),
+                              counterStyle: const TextStyle(color: Colors.grey, fontSize: 12),
+                              alignLabelWithHint: true,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                    
+                          const Text(
+                            'Link Accounts',
+                            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(height: 16),
+                    
+                          _buildSocialLinkField(svgAssetPath: 'assets/icons/facebook.svg', hintText: 'facebook.com/', initialValue: 'facebook.com/'),
+                          _buildSocialLinkField(svgAssetPath: 'assets/icons/instagram.svg', hintText: 'instagram.com/', initialValue: 'instagram.com/'),
+                          _buildSocialLinkField(svgAssetPath: 'assets/icons/x.svg', hintText: 'x.com/', initialValue: 'x.com/'),
+                          _buildSocialLinkField(svgAssetPath: 'assets/icons/linkedin.svg', hintText: 'linkedin.com/', initialValue: 'linkedin.com/'),
+                          _buildSocialLinkField(svgAssetPath: 'assets/icons/tiktok.svg', hintText: 'tiktok.com/', initialValue: 'tiktok.com/'),
+                        ],
+                      ),
                   ),
                   const SizedBox(height: 20),
 
@@ -262,7 +292,7 @@ class EditProfilePage extends StatelessWidget {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            // Access the final image file from the controller on save
+                            context.push('/legecy_home');
                             print('Save button pressed! Final Image file: ${controller.imageFile}');
                           },
                           borderRadius: BorderRadius.circular(25),
@@ -271,7 +301,10 @@ class EditProfilePage extends StatelessWidget {
                             children: [
                               Icon(Icons.save, color: Colors.white),
                               SizedBox(width: 8),
-                              Text('Save', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                              Text(
+                                'Save',
+                                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),
@@ -283,7 +316,7 @@ class EditProfilePage extends StatelessWidget {
               ),
             ),
           );
-        }
+        },
       ),
     );
   }
