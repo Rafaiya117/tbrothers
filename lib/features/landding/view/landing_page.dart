@@ -139,7 +139,7 @@ class LandingPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 750,
+            top: 670,
             left: 20.w,
             right: 20.w,
             child: Row(

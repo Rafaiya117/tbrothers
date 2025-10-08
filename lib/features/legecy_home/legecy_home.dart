@@ -13,8 +13,8 @@ class ProfilePage extends StatelessWidget {
       child: SvgPicture.asset(
         svgAssetPath,
         colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-        height: 16,
-        width: 16,
+        height: 26,
+        width: 26,
       ),
     );
   }
@@ -47,12 +47,15 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildLegacyFeaturesGrid(BuildContext context) {
-    return GridView.count(
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 12), // 👈 gives breathing room
+    child: GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 4,
       mainAxisSpacing: 20,
       crossAxisSpacing: 10,
+      childAspectRatio: 0.8,
       children: [
         _buildLegacyFeatureItem(context, Icons.mic, 'Appso\nMessages', ''),
         _buildLegacyFeatureItem(
@@ -62,8 +65,10 @@ class ProfilePage extends StatelessWidget {
         _buildLegacyFeatureItem(
             context, Icons.signal_cellular_alt, 'Legacy\nLive', ''),
       ],
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildLegacyLineItem(String title, String imagePath) {
     return SizedBox(
@@ -120,11 +125,7 @@ class ProfilePage extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFF5200), Color(0xFFFF7A00)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
+        color: Color(0xFFFE8641)
       ),
       child: Material(
         color: Colors.transparent,
@@ -165,7 +166,7 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           child: Image.asset(
-            'assets/images/apsso.png',
+            'assets/images/legacy_pf_img.png',
             fit: BoxFit.cover,
           ),
         ),
@@ -215,7 +216,8 @@ class ProfilePage extends StatelessWidget {
 
   Widget _buildProfileDetailsCard(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 50),
+      width:double.infinity,
+      margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: const Color(0xFF2A2E52),
@@ -281,15 +283,19 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: const Color(0xFF017FDC),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon:SvgPicture.asset(
+            'assets/icons/arrow_back.svg',
+            width: 16.w,
+            height: 10.h,
+          ),
           onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(
             icon: SvgPicture.asset(
               'assets/icons/legecy_profile_edit_icon.svg',
-              width: 20.w,
-              height: 20.h,
+              width: 19.w,
+              height: 21.h,
             ),
             onPressed: () => context.push('/legacy_edit_profile'),
           ),
@@ -298,7 +304,8 @@ class ProfilePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
-            gradient: AppGradientColors.background_color,
+            color: Color(0xFF030728),
+            //gradient: AppGradientColors.background_color,
           ),
           child: Column(
             children: [
@@ -307,7 +314,7 @@ class ProfilePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: _buildProfileDetailsCard(context),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               const Text(
                 'My Legacy',
                 style: TextStyle(
@@ -346,7 +353,7 @@ class ProfilePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: _buildLegacyFeaturesGrid(context),
               ),
-              const SizedBox(height: 20),
+              // const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Align(
@@ -360,9 +367,9 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
               _buildLegacyLineGrid(),
               _buildCaptureLegacyButton(context),
+              const SizedBox(height: 20), 
             ],
           ),
         ),
