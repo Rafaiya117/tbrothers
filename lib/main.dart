@@ -15,9 +15,12 @@ import 'package:appsoleum/features/home_page/controller/media_player_controller.
 import 'package:appsoleum/features/landding/controller/landing_page_controller.dart';
 import 'package:appsoleum/features/legacy_take_photo/controller/legecy_capture_image_controller.dart';
 import 'package:appsoleum/features/legacy_take_photo/controller/legecy_video_controller.dart';
+import 'package:appsoleum/features/legecy_appso_connects/controller/controller.dart';
+import 'package:appsoleum/features/legecy_appso_message/controller/appso_msg_controller.dart';
 import 'package:appsoleum/features/legecy_interview_question/controller/interview_audio_controller.dart';
 import 'package:appsoleum/features/legecy_interview_question/controller/interview_video_controller.dart';
 import 'package:appsoleum/features/legecy_profile/controller/edit_profile_image_controller.dart';
+import 'package:appsoleum/features/legecy_profile/controller/pr_controller.dart';
 import 'package:appsoleum/features/memoriers/controller/memory_controller.dart';
 import 'package:appsoleum/features/onboarding_one/controller/onboarding_one_controller.dart';
 import 'package:appsoleum/features/profile/controller/edit_controller.dart';
@@ -91,6 +94,9 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_)=> LegecyCaptureVideoController()),
             ChangeNotifierProvider(create: (_)=> InterviewVideoController()),
             ChangeNotifierProvider(create: (_)=> InterviewAudioController()),
+            ChangeNotifierProvider(create: (_)=> MessageController()),
+            ChangeNotifierProvider(create: (_)=> ConnectionsController()),
+            ChangeNotifierProvider(create: (_)=> ProfileController()),
           ],
           child:MaterialApp.router(
             debugShowCheckedModeBanner: false,

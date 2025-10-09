@@ -19,32 +19,80 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildLegacyFeatureItem(
-      BuildContext context, IconData icon, String label, String route) {
-    return GestureDetector(
-      onTap: () {
-        context.push(route);
-      },
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: const BoxDecoration(
-              color: Color(0xFF4A90E2),
-              shape: BoxShape.circle,
+// Widget _buildLegacyFeatureItem(
+//     BuildContext context, String svgAssetPath, String label, String route) {
+//   return GestureDetector(
+//     onTap: () {
+//       context.push(route);
+//     },
+//     child: Column(
+//       children: [
+//         SvgPicture.asset(
+//             svgAssetPath,
+//             width: 54,
+//             height: 54,
+//           ),
+//         const SizedBox(height: 8),
+//         Text(
+//           label,
+//           textAlign: TextAlign.center,
+//           style: const TextStyle(color: Colors.white, fontSize: 13),
+//         ),
+//       ],
+//     ),
+//   );
+// }
+
+Widget _buildLegacyFeatureItem(
+  BuildContext context, String svgAssetPath, String label, String route) {
+  return GestureDetector(
+    onTapDown: (details) async {
+      if (route == '/appso_msg') {
+        final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
+
+        await showMenu(
+          context: context,
+          position: RelativeRect.fromRect(
+            details.globalPosition & const Size(40, 40), 
+            Offset.zero & overlay.size,
+          ),
+          items: [
+            PopupMenuItem(
+              child: const Text('See Message'),
+              onTap: () {
+                Future.delayed(const Duration(), () => context.push(route)); 
+              },
             ),
-            child: Icon(icon, color: Colors.white, size: 16),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white, fontSize: 13),
-          ),
-        ],
-      ),
-    );
-  }
+            PopupMenuItem(
+              child: const Text('Create Message'),
+              onTap: () {
+                context.push('/legacy_capsule_media');
+              },
+            ),
+          ],
+        );
+      } else {
+        context.push(route);
+      }
+    },
+    child: Column(
+      children: [
+        SvgPicture.asset(
+          svgAssetPath,
+          width: 54,
+          height: 54,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.white, fontSize: 13),
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildLegacyFeaturesGrid(BuildContext context) {
   return Padding(
@@ -57,13 +105,10 @@ class ProfilePage extends StatelessWidget {
       crossAxisSpacing: 10,
       childAspectRatio: 0.8,
       children: [
-        _buildLegacyFeatureItem(context, Icons.mic, 'Appso\nMessages', ''),
-        _buildLegacyFeatureItem(
-            context, Icons.public, 'Appso\nConnects', '/appso_connection'),
-        _buildLegacyFeatureItem(
-            context, Icons.book_sharp, 'Appso\nInterviews', '/appso_questions'),
-        _buildLegacyFeatureItem(
-            context, Icons.signal_cellular_alt, 'Legacy\nLive', ''),
+        _buildLegacyFeatureItem(context, 'assets/icons/appso_msg.svg', 'Appso\nMessages', '/appso_msg'),
+        _buildLegacyFeatureItem(context, 'assets/icons/appso_con.svg', 'Appso\nConnects', '/appso_connection'),
+        _buildLegacyFeatureItem(context, 'assets/icons/appso_interview.svg', 'Appso\nInterviews', '/appso_questions'),
+        _buildLegacyFeatureItem(context, 'assets/icons/appso_live.svg', 'Legacy\nLive', ''),
       ],
     ),
   );

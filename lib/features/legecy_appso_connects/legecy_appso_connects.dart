@@ -1,21 +1,11 @@
+import 'package:appsoleum/core/utils/theme.dart';
+import 'package:appsoleum/features/legecy_appso_connects/controller/controller.dart';
+import 'package:appsoleum/features/legecy_appso_connects/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-class Connection {
-  final String profilePicAsset;
-  final String name;
-  final String username;
-  final bool isConnected; 
-
-  Connection({
-    required this.profilePicAsset,
-    required this.name,
-    required this.username,
-    required this.isConnected,
-  });
-}
-
-// Main screen widget
 class MyConnectionsScreen extends StatefulWidget {
   const MyConnectionsScreen({super.key});
 
@@ -24,80 +14,81 @@ class MyConnectionsScreen extends StatefulWidget {
 }
 
 class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
-  final List<Connection> _connections = [
-    Connection(
-      profilePicAsset: 'assets/profile_pic_james.jpg',
-      name: 'James Smith',
-      username: '@username',
-      isConnected: true,
-    ),
-    Connection(
-      profilePicAsset: 'assets/profile_pic_savannah.jpg',
-      name: 'Savannah Hall',
-      username: '@username',
-      isConnected: true,
-    ),
-    Connection(
-      profilePicAsset: 'assets/profile_pic_davide.jpg',
-      name: 'Davide Price',
-      username: '@username',
-      isConnected: false,
-    ),
-    Connection(
-      profilePicAsset: 'assets/profile_pic_christopher.jpg',
-      name: 'Christoper Jones',
-      username: '@username',
-      isConnected: false,
-    ),
-    Connection(
-      profilePicAsset: 'assets/profile_pic_theresa.jpg',
-      name: 'Theresa Reed',
-      username: '@username',
-      isConnected: false,
-    ),
-    Connection(
-      profilePicAsset: 'assets/profile_pic_arlene.jpg',
-      name: 'Arlene Mcmahon',
-      username: '@username',
-      isConnected: true,
-    ),
-    Connection(
-      profilePicAsset: 'assets/profile_pic_george.jpg',
-      name: 'Jeorge Wilson',
-      username: '@username',
-      isConnected: false,
-    ),
-  ];
+  bool _isSearching = false;
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0F4C82), 
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF0F4C82),
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset('assets/icons/arrow_back.svg', colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
-          onPressed: () {}, 
-        ),
-        title: const Text(
-          'My Connections',
-          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: SvgPicture.asset('assets/icons/search_icon.svg', colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
-            onPressed: () {}, 
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-        itemCount: _connections.length,
-        itemBuilder: (context, index) {
-          final connection = _connections[index];
-          return _buildConnectionCard(connection);
+    return ChangeNotifierProvider(
+      create: (_) => ConnectionsController(),
+      child: Consumer<ConnectionsController>(
+        builder: (context, controller, _) {
+          return Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: AppGradientColors.background_color,
+            ),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                backgroundColor: const Color(0xFF017FDC),
+                elevation: 0,
+                leading: IconButton(
+                  icon: SvgPicture.asset(
+                    'assets/icons/arrow_back.svg',
+                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  ),
+                  onPressed: () {
+                    context.pop();
+                  },
+                ),
+                title: _isSearching
+                    ? TextField(
+                        controller: _searchController,
+                        autofocus: true,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: TextStyle(color: Colors.white70),
+                          border: InputBorder.none,
+                        ),
+                        onChanged: controller.search,
+                      )
+                    : const Text(
+                        'My Connections',
+                        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                centerTitle: true,
+                actions: [
+                  IconButton(
+                    icon: SvgPicture.asset(
+                      _isSearching ? 'assets/icons/close_icon.svg' : 'assets/icons/search_icon.svg',
+                      colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (_isSearching) {
+                          _isSearching = false;
+                          _searchController.clear();
+                          controller.search('');
+                        } else {
+                          _isSearching = true;
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
+              body: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+                itemCount: controller.connections.length,
+                itemBuilder: (context, index) {
+                  final connection = controller.connections[index];
+                  return _buildConnectionCard(connection);
+                },
+              ),
+            ),
+          );
         },
       ),
     );
@@ -105,27 +96,14 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
 
   Widget _buildConnectionCard(Connection connection) {
     return Container(
-      //margin: const EdgeInsets.symmetric(vertical: 5.0),
       padding: const EdgeInsets.all(15.0),
-      // decoration: BoxDecoration(
-      //   color: const Color(0xFF1976D2), 
-      //   borderRadius: BorderRadius.circular(15.0),
-      //   boxShadow: [
-      //     BoxShadow(
-      //       color: Colors.black.withOpacity(0.1),
-      //       spreadRadius: 1,
-      //       blurRadius: 3,
-      //       offset: const Offset(0, 2),
-      //     ),
-      //   ],
-      // ),
       child: Row(
         children: [
           Container(
-            width: 56, 
+            width: 56,
             height: 56,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12), 
+              borderRadius: BorderRadius.circular(12),
               color: Colors.grey.shade300,
               image: DecorationImage(
                 image: AssetImage(connection.profilePicAsset),
@@ -150,7 +128,6 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                 Text(
                   connection.username,
                   style: TextStyle(
-                    // ignore: deprecated_member_use
                     color: Colors.white.withOpacity(0.7),
                     fontSize: 14,
                   ),
@@ -173,16 +150,12 @@ class _MyConnectionsScreenState extends State<MyConnectionsScreen> {
                 color: connection.isConnected ? null : const Color(0xFF0F4C82),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: connection.isConnected
-                      ? Colors.transparent
-                      : Colors.white,
+                  color: connection.isConnected ? Colors.transparent : Colors.white,
                   width: 1.5,
                 ),
               ),
               child: ElevatedButton(
-                onPressed: () {
-                  // Your onPressed logic
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   shadowColor: Colors.transparent,

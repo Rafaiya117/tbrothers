@@ -21,10 +21,15 @@ import 'package:appsoleum/features/gallary_and_timeline/time_lines/view/time_lin
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/view/timeline_video.dart';
 import 'package:appsoleum/features/home_page/view/home_page_view.dart';
 import 'package:appsoleum/features/landding/view/landing_page.dart';
+import 'package:appsoleum/features/legacy_create_capsule/view/legacy_add_date.dart';
+import 'package:appsoleum/features/legacy_create_capsule/view/legacy_capsule_add_media.dart';
+import 'package:appsoleum/features/legacy_create_capsule/view/legacy_capsule_add_note.dart';
+import 'package:appsoleum/features/legacy_create_capsule/view/legacy_capsule_final_view.dart';
 import 'package:appsoleum/features/legacy_interview_archived/legecy_interview_archived.dart';
 import 'package:appsoleum/features/legacy_take_photo/view/capture_legecy_video.dart';
 import 'package:appsoleum/features/legecy_appso_connects/legecy_appso_connects.dart';
 import 'package:appsoleum/features/legecy_appso_message/legacy_text_message.dart';
+import 'package:appsoleum/features/legecy_appso_message/legecy_appso_message.dart';
 import 'package:appsoleum/features/legecy_home/legecy_home.dart';
 import 'package:appsoleum/features/legecy_interview_question/view/interview_question_audio.dart';
 import 'package:appsoleum/features/legecy_interview_question/view/interview_question_videorecording.dart';
@@ -230,6 +235,26 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/appso_archive_interview',
       builder: (context, state) => ArchiveInterviewScreen(),
+    ),
+    GoRoute(
+      path: '/appso_msg',
+      builder: (context, state) => AppsoMessageScreen(),
+    ),
+    GoRoute(
+      path: '/legacy_capsule_media',
+      builder: (context, state) => LegacyCapsuleAddMedia(),
+    ),
+    GoRoute(
+      path: '/legacy_capsule_date',
+      builder: (context, state) => LegacyAddDate(),
+    ),
+    GoRoute(
+      path: '/legacy_capsule_addnote',
+      builder: (context, state) => LegacyCapsuleAddNote(),
+    ),
+    GoRoute(
+      path: '/legacy_capsule_finalview',
+      builder: (context, state) => LegacyCapsuleFinalView(),
     ),
   ],
 );
