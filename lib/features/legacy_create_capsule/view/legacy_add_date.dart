@@ -3,6 +3,7 @@ import 'package:appsoleum/core/components/custom_input_field.dart';
 import 'package:appsoleum/core/components/prograssbar_indigator.dart';
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/create_capsule/controller/capsule_controller.dart';
+import 'package:appsoleum/features/legacy_create_capsule/controller/selected_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -155,7 +156,96 @@ class LegacyAddDate extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 100.h),
+            SizedBox(height: 50.h),
+            Consumer<AccountViewModel>(
+              builder: (context, accountViewModel, _) {
+                final selectedAccounts = accountViewModel.selectedAccounts;
+                if (selectedAccounts.isEmpty) return const SizedBox.shrink();
+
+                final displayCount = selectedAccounts.length > 5
+                  ? 5 : selectedAccounts.length;
+                final remainingCount = selectedAccounts.length - 5;
+
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Beneficiaries:",
+                        style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: SizedBox(
+                          height: 38.h,
+                          width: double.infinity,
+                          child: Stack(
+                            children: [
+                              for (int i = 0; i < displayCount; i++)
+                                Positioned(
+                                  right: i * 28.w,
+                                  child: Container(
+                                    width: 38.w,
+                                    height: 38.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 1.5,
+                                      ),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          selectedAccounts[i].imageUrl ??
+                                          'https://via.placeholder.com/150',
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                        
+                              // ➕ Show "+N" if more than 5
+                              if (remainingCount > 0)
+                                Positioned(
+                                  right: displayCount * 28.w,
+                                  child: Container(
+                                    width: 38.w,
+                                    height: 38.w,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: const Color(0xFFFF8C42,), 
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 1.5,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      '+$remainingCount',
+                                      style: GoogleFonts.inter(
+                                        color: Colors.white,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 40.h),
             SizedBox(
               width: double.infinity,
               child: ProgressIndicatorWidget(

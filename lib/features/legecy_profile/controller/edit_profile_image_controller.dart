@@ -75,7 +75,7 @@ class EditProfileController extends ChangeNotifier {
         children: [
           Icon(Icons.folder_open_outlined, color: Colors.black54),
           SizedBox(width: 10),
-          Text('Upload from Gallery'),
+          Text('Text Message'),
         ],
       ),
     ),
@@ -149,7 +149,8 @@ Future<void> pickImageAndNavigateToCrop(BuildContext context, ImageSource source
             context.push('/legecy_captured_video', extra: filterText);
             break;               
           case FilterAction.uploadGallery:
-            await pickMediaFromGallery(context, filterText); 
+            //await pickMediaFromGallery(context, filterText); 
+            context.push('/appso_text_message', extra: filterText);
             break;
           }
         }

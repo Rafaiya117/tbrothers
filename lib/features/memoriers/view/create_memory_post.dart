@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class CreatePostPage extends StatelessWidget {
   const CreatePostPage({super.key});
@@ -75,7 +76,7 @@ class CreatePostPage extends StatelessWidget {
               // 5. Done Button
               ElevatedButton(
                 onPressed: () {
-                  // Action for Done button
+                  context.push('/home_page');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryOrange,

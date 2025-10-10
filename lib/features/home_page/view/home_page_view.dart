@@ -94,7 +94,9 @@ const HomePageView({super.key});
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.push('/memory_post');
+                          },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
                             minimumSize: Size(0, 0),

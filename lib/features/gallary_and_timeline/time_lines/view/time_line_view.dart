@@ -67,17 +67,17 @@ class TimeLineView extends StatelessWidget {
                   builder:(context,controller,_){
                     return 
                     MediaToggle(
-                          controller: controller,
-                          onSelectionChanged: (value) {
-                            switch (value) {
-                            case 'Gallery':
-                              context.push('/gallary_view');
+                      controller: controller,
+                        onSelectionChanged: (value) {
+                          switch (value) {
+                            case 'Photos':
+                              context.push('/time_line_image');
                             break;
-                            // case 'Videos':
-                            //   context.push('/videos_view');
-                            //   break;
-                            case 'Timeline':
-                              context.push('/timeline_view');
+                            case 'Videos':
+                              context.push('/video_time_line');
+                              break;
+                            case 'Audios':
+                              context.push('/time_line_audio');
                             break;
                           default:
                             print('Unknown selection: $value');
@@ -213,7 +213,9 @@ class TimeLineView extends StatelessWidget {
                     SelectableTextButton(
                       label: "Photos",
                       isSelected: true,
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push('/time_line_image');
+                      },
                       textColor: Colors.white,
                       backgroundColor: Color(0xFF2A2E52),
                       borderRadius: 30.r,
@@ -230,9 +232,11 @@ class TimeLineView extends StatelessWidget {
                       //borderColor: Colors.orange,
                     ),
                     SelectableTextButton(
-                      label: "Notes",
+                      label: "Audio",
                       isSelected: true,
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push('/time_line_audio');
+                      },
                       textColor: Colors.white,
                       backgroundColor: Color(0xFF2A2E52),
                       borderRadius: 30.r,

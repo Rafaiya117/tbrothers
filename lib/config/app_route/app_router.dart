@@ -25,6 +25,7 @@ import 'package:appsoleum/features/legacy_create_capsule/view/legacy_add_date.da
 import 'package:appsoleum/features/legacy_create_capsule/view/legacy_capsule_add_media.dart';
 import 'package:appsoleum/features/legacy_create_capsule/view/legacy_capsule_add_note.dart';
 import 'package:appsoleum/features/legacy_create_capsule/view/legacy_capsule_final_view.dart';
+import 'package:appsoleum/features/legacy_create_capsule/view/selected_user.dart';
 import 'package:appsoleum/features/legacy_interview_archived/legecy_interview_archived.dart';
 import 'package:appsoleum/features/legacy_take_photo/view/capture_legecy_video.dart';
 import 'package:appsoleum/features/legecy_appso_connects/legecy_appso_connects.dart';
@@ -255,6 +256,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/legacy_capsule_finalview',
       builder: (context, state) => LegacyCapsuleFinalView(),
+    ),
+    GoRoute(
+      path: '/selected_user',
+      builder: (context, state) => SelectRecipientScreen(),
     ),
   ],
 );

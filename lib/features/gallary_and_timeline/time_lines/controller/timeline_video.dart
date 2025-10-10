@@ -28,15 +28,25 @@ class TimelineVideoController extends ChangeNotifier
   // Video list state
   // ----------------------
   final List<VideoItem> _videoList = [
+    // VideoItem(
+    //   thumbnail: 'assets/videos/video_image1.png', 
+    //   duration: '02:53',
+    //   videoPath: 'assets/videos/family.mp4', 
+    // ),
+    // VideoItem(
+    //   thumbnail: 'assets/videos/video_image2.png',
+    //   duration: '01:45',
+    //   videoPath: 'assets/videos/family2.mp4',
+    // ),
     VideoItem(
-      thumbnail: 'assets/videos/video_image1.png', 
-      duration: '02:53',
-      videoPath: 'assets/videos/family.mp4', 
+      thumbnail: 'assets/videos/video_image1.png',
+      duration: '00:30',
+      videoPath:'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
     ),
     VideoItem(
       thumbnail: 'assets/videos/video_image2.png',
-      duration: '01:45',
-      videoPath: 'assets/videos/family2.mp4',
+      duration: '00:45',
+      videoPath:'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
     ),
     VideoItem(
       thumbnail: 'assets/videos/video_image3.png', 

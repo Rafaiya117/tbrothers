@@ -13,6 +13,8 @@ import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/ti
 import 'package:appsoleum/features/home_page/controller/home_page_controller.dart';
 import 'package:appsoleum/features/home_page/controller/media_player_controller.dart';
 import 'package:appsoleum/features/landding/controller/landing_page_controller.dart';
+import 'package:appsoleum/features/legacy_create_capsule/controller/legacy_create_capsule_controller.dart';
+import 'package:appsoleum/features/legacy_create_capsule/controller/selected_user_controller.dart';
 import 'package:appsoleum/features/legacy_take_photo/controller/legecy_capture_image_controller.dart';
 import 'package:appsoleum/features/legacy_take_photo/controller/legecy_video_controller.dart';
 import 'package:appsoleum/features/legecy_appso_connects/controller/controller.dart';
@@ -97,6 +99,8 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_)=> MessageController()),
             ChangeNotifierProvider(create: (_)=> ConnectionsController()),
             ChangeNotifierProvider(create: (_)=> ProfileController()),
+            ChangeNotifierProvider(create: (_)=> LegacyCreateCapsuleController()),
+            ChangeNotifierProvider(create: (_)=> AccountViewModel()),
           ],
           child:MaterialApp.router(
             debugShowCheckedModeBanner: false,

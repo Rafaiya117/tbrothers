@@ -5,6 +5,7 @@ import 'package:appsoleum/features/gallary_and_timeline/time_lines/widget/audio_
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -60,13 +61,13 @@ class TimeLineAudio extends StatelessWidget {
                         onSelectionChanged: (value) {
                           switch (value) {
                             case 'Photos':
-                              //context.push('/gallary_view');
+                              context.push('/time_line_image');
                             break;
                             case 'Videos':
-                              //context.push('/videos_view');
+                              context.push('/video_time_line');
                               break;
                             case 'Audios':
-                              //context.push('/timeline_view');
+                              context.push('/time_line_audio');
                             break;
                           default:
                             print('Unknown selection: $value');

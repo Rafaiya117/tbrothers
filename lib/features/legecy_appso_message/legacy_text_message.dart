@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class AppsoMessagePage extends StatelessWidget {
   const AppsoMessagePage({super.key});
@@ -10,17 +11,17 @@ class AppsoMessagePage extends StatelessWidget {
       {
         'name': 'Noah Reed',
         'date': 'Delivered August 13, 2028',
-        'profile': 'assets/profile_image.png', // replace with your asset
+        'profile': 'assets/images/profile_img1.png', // replace with your asset
       },
       {
         'name': 'Noah Reed',
         'date': 'Delivered August 13, 2028',
-        'profile': 'assets/profile_image.png',
+        'profile': 'assets/images/profile_img1.png',
       },
       {
         'name': 'Noah Reed',
         'date': 'Delivered August 13, 2028',
-        'profile': 'assets/profile_image.png',
+        'profile': 'assets/images/profile_img1.png',
       },
     ];
 
@@ -36,7 +37,7 @@ class AppsoMessagePage extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           icon: SvgPicture.asset(
-            'assets/back_arrow.svg', // your back arrow svg
+            'assets/icons/arrow_back.svg', 
             colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
           ),
           onPressed: () => Navigator.pop(context),
@@ -172,7 +173,9 @@ class AppsoMessagePage extends StatelessWidget {
                 style: TextStyle(color: Colors.white54, fontSize: 13),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push('/appso_msg');
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFF7A00),
                   shape: RoundedRectangleBorder(

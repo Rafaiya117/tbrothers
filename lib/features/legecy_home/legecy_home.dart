@@ -155,8 +155,7 @@ Widget _buildLegacyFeatureItem(
           const SizedBox(width: 12),
           _buildLegacyLineItem('Family', 'assets/images/legacy_line2.png'),
           const SizedBox(width: 12),
-          _buildLegacyLineItem(
-              'Love & Relationship', 'assets/images/legacy_line3.png'),
+          _buildLegacyLineItem('Love & Relationship', 'assets/images/legacy_line3.png'),
           const SizedBox(width: 12),
           _buildLegacyLineItem('Travel', 'assets/images/legacy_line4.png'),
         ],

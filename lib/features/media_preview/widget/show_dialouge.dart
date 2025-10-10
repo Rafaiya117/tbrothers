@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void showSuccessDialog(BuildContext context) {
   const Color primaryTextColor = Color(0xFF264653); 
@@ -69,7 +70,7 @@ void showSuccessDialog(BuildContext context) {
                   height: 55, 
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop(); 
+                     context.push('/home_page'); 
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: orangeButtonColor,

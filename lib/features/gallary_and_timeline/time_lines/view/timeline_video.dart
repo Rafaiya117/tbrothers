@@ -2,6 +2,7 @@ import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/timeline_video.dart';
 import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/media_selector.dart';
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/widget/video_card.dart';
+import 'package:appsoleum/features/gallary_and_timeline/time_lines/widget/videoplayer_expand.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -65,7 +66,7 @@ class TimelineVideo extends StatelessWidget {
                               context.push('/time_line_image');
                             break;
                             case 'Videos':
-                              context.push('/videos_view');
+                              context.push('/video_time_line');
                               break;
                             case 'Audios':
                               context.push('/time_line_audio');
@@ -99,7 +100,15 @@ class TimelineVideo extends StatelessWidget {
                           thumbnailPath: video.thumbnail,
                           duration: video.duration,
                           onTap: () {
-                            // Handle video tap
+                           showDialog(
+                            context: context,
+                              builder: (_) => Dialog(
+                                backgroundColor: Colors.black,
+                                child: SimpleVideoViewer(
+                                  videoPath: video.videoPath,
+                                ),
+                              ),
+                            );
                           },
                         );
                       },

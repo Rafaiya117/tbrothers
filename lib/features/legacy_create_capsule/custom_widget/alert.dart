@@ -44,9 +44,7 @@ void showlegacyCapsuleSealedDialog(BuildContext context) {
                   ),
                 ),
                 onPressed: () {
-                  context.push('/appso_home');
-                  //Navigator.of(context).pop();
-                  // context.push('/home'); // Uncomment if using go_router
+                  context.push('/legecy_home');
                 },
                 child: Text(
                   "Back to Home",

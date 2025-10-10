@@ -163,7 +163,7 @@ class LegacyCapsuleAddNote extends StatelessWidget {
                           textColor:controller.title.text.isEmpty?FontColors.disable_text: Colors.white,
                           onPressed: controller.title.text.isEmpty
                             ? null: () {
-                            context.push('/legacy_capsule_date');
+                            context.push('/selected_user');
                           },
                         ),
                       );

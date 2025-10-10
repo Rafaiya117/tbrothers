@@ -114,7 +114,7 @@ class CapsuleMemoryPreview extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20.h,),
+              SizedBox(height: 30.h,),
               CustomRoundedButton(
                 text: "Send to Capsule",
                 backgroundColor: FontColors.button_color,
