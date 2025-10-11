@@ -1,5 +1,5 @@
+import 'package:appsoleum/core/components/custom_media_toogle.dart';
 import 'package:appsoleum/core/utils/theme.dart';
-import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/media_selector.dart';
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/time_line_audio_controller.dart';
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/widget/audio_card.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +28,15 @@ class TimeLineAudio extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(
-                      'assets/icons/arrow_back.svg',
-                      width: 16.w,
-                      height: 10.h,
+                    GestureDetector(
+                      onTap: () {
+                        context.pop();
+                      },
+                    child:SvgPicture.asset(
+                        'assets/icons/arrow_back.svg',
+                        width: 16.w,
+                        height: 10.h,
+                      ),
                     ),
                     SizedBox(width:100.w),
                     Align(
@@ -53,30 +58,35 @@ class TimeLineAudio extends StatelessWidget {
                   ],
                 ),
               SizedBox(height: 20.h),
-              Consumer<TimeLineAudioController>(
-                builder:(context,controller,_){
-                  return 
-                    MediaToggle(
-                      controller: controller,
-                        onSelectionChanged: (value) {
-                          switch (value) {
-                            case 'Photos':
-                              context.push('/time_line_image');
-                            break;
-                            case 'Videos':
-                              context.push('/video_time_line');
-                              break;
-                            case 'Audios':
-                              context.push('/time_line_audio');
-                            break;
-                          default:
-                            print('Unknown selection: $value');
-                        }
-                      },
-                    );
-                  }
-                ),
+              // Consumer<TimeLineAudioController>(
+              //   builder:(context,controller,_){
+              //     return 
+              //       MediaToggle(
+              //         controller: controller,
+              //           onSelectionChanged: (value) {
+              //             switch (value) {
+              //               case 'Photos':
+              //                 context.push('/time_line_image');
+              //               break;
+              //               case 'Videos':
+              //                 context.push('/video_time_line');
+              //                 break;
+              //               case 'Audios':
+              //                 context.push('/time_line_audio');
+              //               break;
+              //             default:
+              //               print('Unknown selection: $value');
+              //           }
+              //         },
+              //       );
+              //     }
+              //   ),
               //SizedBox(height: 10.h),
+              Consumer<TimeLineAudioController>(
+                builder: (context, controller, _) {
+                  return CustomNavTab(items: controller.navItems, currentScreen: this,);
+                },
+              ),
               Expanded(
                 child: Consumer<TimeLineAudioController>(
                   builder: (context, controller, _) {

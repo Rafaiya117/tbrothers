@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-enum MediaType { image, video, text }
+enum MediaTypes { image, video, text }
 
 class MediaCard extends StatelessWidget {
   final String? imagePath;
   final String? title;
   final String? description;
-  final MediaType type;
+  final MediaTypes type;
   final double? height;
   final double? width;
 
@@ -23,11 +23,11 @@ class MediaCard extends StatelessWidget {
   /// Return default size based on type
   double get _defaultHeight {
     switch (type) {
-      case MediaType.image:
+      case MediaTypes.image:
         return 175;
-      case MediaType.video:
+      case MediaTypes.video:
         return 267;
-      case MediaType.text:
+      case MediaTypes.text:
         return 131;
     }
   }
@@ -42,7 +42,7 @@ class MediaCard extends StatelessWidget {
         width: width ?? _defaultWidth,
         height: height ?? _defaultHeight,
         color: Colors.white,
-        child: type == MediaType.text
+        child: type == MediaTypes.text
             ? _buildTextCard()
             : _buildImageOrVideoCard(),
       ),
@@ -69,7 +69,7 @@ class MediaCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
             ),
             child: Icon(
-              type == MediaType.video ? Icons.videocam : Icons.photo,
+              type == MediaTypes.video ? Icons.videocam : Icons.photo,
               color: Colors.white,
               size: 20,
             ),

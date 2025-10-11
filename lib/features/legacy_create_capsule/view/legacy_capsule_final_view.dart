@@ -5,6 +5,7 @@ import 'package:appsoleum/features/legacy_create_capsule/custom_widget/alert.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -27,10 +28,15 @@ class LegacyCapsuleFinalView extends StatelessWidget {
             children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: SvgPicture.asset(
-                  'assets/icons/arrow_back.svg',
-                  width: 16.w,
-                  height: 10.h,
+                child: GestureDetector(
+                  onTap: () {
+                    context.pop();
+                  },
+                  child:SvgPicture.asset(
+                    'assets/icons/arrow_back.svg',
+                    width: 16.w,
+                    height: 10.h,
+                  ),
                 ),
               ),
               SizedBox(height: 30.h),

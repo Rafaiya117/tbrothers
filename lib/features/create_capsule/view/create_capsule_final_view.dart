@@ -28,11 +28,17 @@ class CreateCapsuleFinalView extends StatelessWidget {
             children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: SvgPicture.asset(
-                  'assets/icons/arrow_back.svg',
-                  width: 16.w,
-                  height: 10.h,
+                child:GestureDetector(
+                  onTap: () {
+                    context.pop();
+                  },
+                child:SvgPicture.asset(
+                    'assets/icons/arrow_back.svg',
+                    width: 16.w,
+                    height: 10.h,
+                  ),
                 ),
+                
               ),
               SizedBox(height: 30.h),
               Align(

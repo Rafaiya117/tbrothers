@@ -25,7 +25,9 @@ class SelectRecipientScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF017FDC),
         leading: IconButton(
-          onPressed: (){}, 
+          onPressed: (){
+            context.pop();
+          }, 
           icon: SvgPicture.asset(
           'assets/icons/arrow_back.svg',
           width: 16,

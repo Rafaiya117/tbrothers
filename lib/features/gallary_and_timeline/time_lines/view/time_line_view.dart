@@ -1,3 +1,4 @@
+import 'package:appsoleum/core/components/custom_media_toogle.dart';
 import 'package:appsoleum/core/components/custom_navigation_bar.dart';
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/gallary_and_timeline/gallery/controller/gallary_and_timeline_controller.dart';
@@ -63,28 +64,33 @@ class TimeLineView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height:20.h),
+                // Consumer<GalleryTimelineController>(
+                //   builder:(context,controller,_){
+                //     return 
+                //     MediaToggle(
+                //       controller: controller,
+                //         onSelectionChanged: (value) {
+                //           switch (value) {
+                //             case 'Photos':
+                //               context.push('/time_line_image');
+                //             break;
+                //             case 'Videos':
+                //               context.push('/video_time_line');
+                //               break;
+                //             case 'Audios':
+                //               context.push('/time_line_audio');
+                //             break;
+                //           default:
+                //             print('Unknown selection: $value');
+                //         }
+                //       },
+                //     );
+                //   }
+                // ),
                 Consumer<GalleryTimelineController>(
-                  builder:(context,controller,_){
-                    return 
-                    MediaToggle(
-                      controller: controller,
-                        onSelectionChanged: (value) {
-                          switch (value) {
-                            case 'Photos':
-                              context.push('/time_line_image');
-                            break;
-                            case 'Videos':
-                              context.push('/video_time_line');
-                              break;
-                            case 'Audios':
-                              context.push('/time_line_audio');
-                            break;
-                          default:
-                            print('Unknown selection: $value');
-                        }
-                      },
-                    );
-                  }
+                  builder: (context, controller, _) {
+                    return CustomNavTab(items: controller.navItems, currentScreen: this,);
+                  },
                 ),
                 SizedBox(height: 20.h),
                 SizedBox(

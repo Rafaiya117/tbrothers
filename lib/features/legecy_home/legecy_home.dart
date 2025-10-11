@@ -108,7 +108,7 @@ Widget _buildLegacyFeatureItem(
         _buildLegacyFeatureItem(context, 'assets/icons/appso_msg.svg', 'Appso\nMessages', '/appso_msg'),
         _buildLegacyFeatureItem(context, 'assets/icons/appso_con.svg', 'Appso\nConnects', '/appso_connection'),
         _buildLegacyFeatureItem(context, 'assets/icons/appso_interview.svg', 'Appso\nInterviews', '/appso_questions'),
-        _buildLegacyFeatureItem(context, 'assets/icons/appso_live.svg', 'Legacy\nLive', ''),
+        _buildLegacyFeatureItem(context, 'assets/icons/appso_live.svg', 'Legacy\nLive', '/legacy_live'),
       ],
     ),
   );

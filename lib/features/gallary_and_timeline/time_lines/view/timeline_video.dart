@@ -1,13 +1,12 @@
+import 'package:appsoleum/core/components/custom_media_toogle.dart';
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/controller/timeline_video.dart';
-import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/media_selector.dart';
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/widget/video_card.dart';
 import 'package:appsoleum/features/gallary_and_timeline/time_lines/widget/videoplayer_expand.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-//import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -30,10 +29,15 @@ class TimelineVideo extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(
-                      'assets/icons/arrow_back.svg',
-                      width: 16.w,
-                      height: 10.h,
+                    GestureDetector(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child:SvgPicture.asset(
+                        'assets/icons/arrow_back.svg',
+                        width: 16.w,
+                        height: 10.h,
+                      ),
                     ),
                     SizedBox(width:100.w),
                     Align(
@@ -55,29 +59,34 @@ class TimelineVideo extends StatelessWidget {
                   ],
                 ),
               SizedBox(height: 20.h),
+              // Consumer<TimelineVideoController>(
+              //   builder:(context,controller,_){
+              //     return 
+              //       MediaToggle(
+              //         controller: controller,
+              //           onSelectionChanged: (value) {
+              //             switch (value) {
+              //               case 'Photos':
+              //                 context.push('/time_line_image');
+              //               break;
+              //               case 'Videos':
+              //                 context.push('/video_time_line');
+              //                 break;
+              //               case 'Audios':
+              //                 context.push('/time_line_audio');
+              //               break;
+              //             default:
+              //               print('Unknown selection: $value');
+              //           }
+              //         },
+              //       );
+              //     }
+              //   ),
               Consumer<TimelineVideoController>(
-                builder:(context,controller,_){
-                  return 
-                    MediaToggle(
-                      controller: controller,
-                        onSelectionChanged: (value) {
-                          switch (value) {
-                            case 'Photos':
-                              context.push('/time_line_image');
-                            break;
-                            case 'Videos':
-                              context.push('/video_time_line');
-                              break;
-                            case 'Audios':
-                              context.push('/time_line_audio');
-                            break;
-                          default:
-                            print('Unknown selection: $value');
-                        }
-                      },
-                    );
-                  }
-                ),
+                builder: (context, controller, _) {
+                  return CustomNavTab(items: controller.navItems, currentScreen: this,);
+                },
+              ),
               SizedBox(height: 20.h),
               Expanded(
                 child: Consumer<TimelineVideoController>(

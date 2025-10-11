@@ -10,6 +10,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -37,10 +38,15 @@ class CaptureImage extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(
-                      'assets/icons/arrow_back.svg',
-                      width: 16.w,
-                      height: 10.h,
+                    GestureDetector(
+                      onTap: (){
+                        context.pop();
+                      },
+                      child: SvgPicture.asset(
+                        'assets/icons/arrow_back.svg',
+                        width: 16.w,
+                        height: 10.h,
+                      ),
                     ),
                     SizedBox(width: 100.w),
                     Align(

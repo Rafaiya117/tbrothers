@@ -1,8 +1,10 @@
-import 'package:appsoleum/features/gallary_and_timeline/commons/controller/inmedia_controller.dart';
+import 'package:appsoleum/core/components/custom_media_toogle.dart';
 import 'package:appsoleum/features/gallary_and_timeline/commons/model/time_line_model.dart';
+import 'package:appsoleum/features/gallary_and_timeline/gallery/view/gallary_view.dart';
+import 'package:appsoleum/features/gallary_and_timeline/time_lines/view/time_line_view.dart';
 import 'package:flutter/material.dart';
 
-class GalleryTimelineController extends ChangeNotifier  implements IMediaToggleController {
+class GalleryTimelineController extends ChangeNotifier {
   //!-------------Media Toggle--------------!
   String _selectedOption = 'Gallery';
   final List<String> _options = ['Gallery', 'Timeline'];
@@ -15,6 +17,22 @@ class GalleryTimelineController extends ChangeNotifier  implements IMediaToggleC
       _selectedOption = option;
       notifyListeners();
     }
+  }
+
+final List<NavItem> _navItems = [
+  NavItem(label: 'Gallery', screen: GallaryView()),
+  NavItem(label: 'Timeline', screen: TimeLineView()),
+];
+
+
+  String _currentRoute = '/gallary_view'; 
+
+  List<NavItem> get navItems => _navItems;
+  String get currentRoute => _currentRoute;
+
+  void updateRoute(String route) {
+    _currentRoute = route;
+    notifyListeners();
   }
 
   //!----------Switch---------------!
@@ -73,4 +91,6 @@ class GalleryTimelineController extends ChangeNotifier  implements IMediaToggleC
     _entries.clear();
     notifyListeners();
   }
+  //!----------Media Filtering----------!
+
 }

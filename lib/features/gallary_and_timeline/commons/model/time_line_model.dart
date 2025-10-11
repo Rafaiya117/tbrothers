@@ -1,4 +1,4 @@
-enum MediaType { photo, video }
+enum MediaType { photo, video, text }
 
 class TimelineEntry {
   final String title;

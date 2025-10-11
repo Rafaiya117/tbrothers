@@ -4,6 +4,7 @@ import 'package:appsoleum/core/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 enum GridItemType {
   video,
@@ -113,7 +114,9 @@ class ArchiveInterviewScreen extends StatelessWidget {
             'assets/icons/arrow_back.svg',
             colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
           ),
-          onPressed: () {},
+          onPressed: () {
+            context.pop();
+          },
         ),
         title: const Text(
           'Archive Interview',

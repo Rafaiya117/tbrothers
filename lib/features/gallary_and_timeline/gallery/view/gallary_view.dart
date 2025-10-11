@@ -1,14 +1,13 @@
+import 'package:appsoleum/core/components/custom_media_toogle.dart';
 import 'package:appsoleum/core/components/custom_navigation_bar.dart';
 import 'package:appsoleum/core/utils/theme.dart';
 import 'package:appsoleum/features/gallary_and_timeline/gallery/controller/gallary_and_timeline_controller.dart';
 import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/custom_emotional_card.dart';
 import 'package:appsoleum/features/gallary_and_timeline/gallery/widget/media_card.dart';
-import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/media_selector.dart';
 import 'package:appsoleum/features/gallary_and_timeline/commons/widgets/selectable_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -63,33 +62,38 @@ class GallaryView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height:20.h),
+                // Consumer<GalleryTimelineController>(
+                //   builder: (context, controller, _) {
+                //     return Builder(
+                //       builder: (innerContext) => GestureDetector(
+                //         onTap: () {
+                //           innerContext.push('/timeline_view');
+                //         },
+                //         child:MediaToggle(
+                //           controller: controller,
+                //           onSelectionChanged: (value) {
+                //             switch (value) {
+                //               case 'Gallery':
+                //                 context.push('/gallary_view');
+                //                 break;
+                //               // case 'Videos':
+                //               //   context.push('/videos_view');
+                //               //   break;
+                //               case 'Timeline':
+                //                 context.push('/timeline_view');
+                //                 break;
+                //               default:
+                //                 print('Unknown selection: $value');
+                //             }
+                //           },
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // ),
                 Consumer<GalleryTimelineController>(
                   builder: (context, controller, _) {
-                    return Builder(
-                      builder: (innerContext) => GestureDetector(
-                        onTap: () {
-                          innerContext.push('/timeline_view');
-                        },
-                        child:MediaToggle(
-                          controller: controller,
-                          onSelectionChanged: (value) {
-                            switch (value) {
-                              case 'Gallery':
-                                context.push('/gallary_view');
-                                break;
-                              // case 'Videos':
-                              //   context.push('/videos_view');
-                              //   break;
-                              case 'Timeline':
-                                context.push('/timeline_view');
-                                break;
-                              default:
-                                print('Unknown selection: $value');
-                            }
-                          },
-                        ),
-                      ),
-                    );
+                    return CustomNavTab(items: controller.navItems, currentScreen: this,);
                   },
                 ),
                 SizedBox(height: 20.h),
@@ -278,15 +282,15 @@ class GallaryView extends StatelessWidget {
                   mainAxisSpacing: 12,
                   children: const [
                     MediaCard(
-                      type: MediaType.image,
+                      type: MediaTypes.image,
                       imagePath: "assets/images/family.png",
                     ),
                     MediaCard(
-                      type: MediaType.video,
+                      type: MediaTypes.video,
                       imagePath: "assets/images/family.png",
                     ),
                     MediaCard(
-                      type: MediaType.text,
+                      type: MediaTypes.text,
                       title: "Exciting Day!",
                       description:"Today was absolutely amazing! I went to the beach...",
                     ),

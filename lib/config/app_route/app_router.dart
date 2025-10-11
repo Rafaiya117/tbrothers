@@ -27,6 +27,7 @@ import 'package:appsoleum/features/legacy_create_capsule/view/legacy_capsule_add
 import 'package:appsoleum/features/legacy_create_capsule/view/legacy_capsule_final_view.dart';
 import 'package:appsoleum/features/legacy_create_capsule/view/selected_user.dart';
 import 'package:appsoleum/features/legacy_interview_archived/legecy_interview_archived.dart';
+import 'package:appsoleum/features/legacy_live/legacy_live.dart';
 import 'package:appsoleum/features/legacy_take_photo/view/capture_legecy_video.dart';
 import 'package:appsoleum/features/legecy_appso_connects/legecy_appso_connects.dart';
 import 'package:appsoleum/features/legecy_appso_message/legacy_text_message.dart';
@@ -261,6 +262,10 @@ final GoRouter appRouter = GoRouter(
       path: '/selected_user',
       builder: (context, state) => SelectRecipientScreen(),
     ),
+    GoRoute(
+      path: '/legacy_live',
+      builder: (context, state) => LegacyLivePage(availableCameras: [],),
+    ),  
   ],
 );
 

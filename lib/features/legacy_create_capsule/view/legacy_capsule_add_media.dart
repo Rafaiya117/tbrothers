@@ -34,10 +34,15 @@ class LegacyCapsuleAddMedia extends StatelessWidget {
                     Row(
                       // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SvgPicture.asset(
+                        GestureDetector(
+                          onTap: () {
+                            context.pop();
+                          },
+                          child: SvgPicture.asset(
                           'assets/icons/arrow_back.svg',
                           width: 16.w,
                           height: 10.h,
+                        ),
                         ),
                         SizedBox(width:100.w),
                         Align(
