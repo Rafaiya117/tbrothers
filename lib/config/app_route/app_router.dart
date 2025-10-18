@@ -42,6 +42,9 @@ import 'package:appsoleum/features/legacy_take_photo/view/legecy_take_photo.dart
 import 'package:appsoleum/features/media_preview/view/capsule_memory_preview.dart';
 import 'package:appsoleum/features/memoriers/view/create_memory_post.dart';
 import 'package:appsoleum/features/memoriers/view/memory_post.dart';
+import 'package:appsoleum/features/memoriers/view/record_audio_memory.dart';
+import 'package:appsoleum/features/memoriers/view/record_video_memory.dart';
+import 'package:appsoleum/features/memoriers/view/recording_screen.dart';
 import 'package:appsoleum/features/onboarding_one/view/onboarding_one_view.dart';
 import 'package:appsoleum/features/privacy_policy/privacy_policy.dart';
 import 'package:appsoleum/features/profile/view/account_information_view.dart';
@@ -265,7 +268,19 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/legacy_live',
       builder: (context, state) => LegacyLivePage(availableCameras: [],),
+    ),
+    GoRoute(
+      path: '/record_memorypost',
+      builder: (context, state) => RecordMediaScreen(),
     ),  
+    GoRoute(
+      path: '/record_memoryaudio_post',
+      builder: (context, state) => RecordAudioMemory(),
+    ),
+    GoRoute(
+      path: '/record_memoryvideo_post',
+      builder: (context, state) => RecordVideoMemory(),
+    ), 
   ],
 );
 

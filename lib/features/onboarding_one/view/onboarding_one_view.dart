@@ -164,7 +164,7 @@ class OnboardingOneView extends StatelessWidget {
                             CustomAccountOption(
                               svgIconPath:'assets/icons/icon_creator_account.svg',
                               title: "Creator Account",
-                              subtitle: "Live, Preserve, Create.",
+                              subtitle: "Share, Manage, Monitize.",
                               iconColor: FontColors.icon_color,
                               isSelected: controller.selectedIndex == 1,
                               selectedGradient: const LinearGradient(
@@ -182,8 +182,8 @@ class OnboardingOneView extends StatelessWidget {
                           builder: (context, controller, _) =>
                             CustomAccountOption(
                               svgIconPath: 'assets/icons/icon_benificier.svg',
-                              title: "Viwer Account",
-                              subtitle: "Live, Preserve, Create.",
+                              title: "Viewer Account",
+                              subtitle: "Browse and interact with the content.",
                               iconColor: FontColors.icon_color,
                               isSelected: controller.selectedIndex == 2,
                               selectedGradient: const LinearGradient(

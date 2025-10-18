@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,10 +7,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
 class CustomVideoUploader extends StatefulWidget {
-  const CustomVideoUploader({super.key});
+  final Function(File)? onVideoPicked; // ✅ Added callback
+  const CustomVideoUploader({super.key, this.onVideoPicked});
 
   @override
-  // ignore: library_private_types_in_public_api
   _CustomVideoUploaderState createState() => _CustomVideoUploaderState();
 }
 
@@ -27,8 +26,11 @@ class _CustomVideoUploaderState extends State<CustomVideoUploader> {
       _videoFile = File(pickedFile.path);
       _videoController = VideoPlayerController.file(_videoFile!)
         ..initialize().then((_) {
-        setState(() {});
-      });
+          setState(() {});
+        });
+
+      // ✅ Notify parent controller
+      widget.onVideoPicked?.call(_videoFile!);
     }
   }
 
@@ -43,14 +45,14 @@ class _CustomVideoUploaderState extends State<CustomVideoUploader> {
     return GestureDetector(
       onTap: _videoFile == null ? _pickVideo : null,
       child: _videoFile == null
-        ? DottedBorder(
-          options: RoundedRectDottedBorderOptions(
-            dashPattern: [6, 3],
-              strokeWidth: 1.5,
-              color: Colors.blue.shade300,
-              radius: Radius.circular(10),
-              padding: EdgeInsets.zero,
-            ),
+          ? DottedBorder(
+              options: RoundedRectDottedBorderOptions(
+                dashPattern: [6, 3],
+                strokeWidth: 1.5,
+                color: Colors.blue.shade300,
+                radius: Radius.circular(10),
+                padding: EdgeInsets.zero,
+              ),
               child: Container(
                 width: 318.w,
                 height: 136.h,
@@ -61,7 +63,6 @@ class _CustomVideoUploaderState extends State<CustomVideoUploader> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    //Circular background behind icon
                     Container(
                       width: 40,
                       height: 40,
@@ -69,7 +70,7 @@ class _CustomVideoUploaderState extends State<CustomVideoUploader> {
                         color: Colors.blue,
                         shape: BoxShape.circle,
                       ),
-                      child:Center(
+                      child: Center(
                         child: SizedBox(
                           width: 20.w,
                           height: 20.h,
@@ -100,17 +101,15 @@ class _CustomVideoUploaderState extends State<CustomVideoUploader> {
                     child: SizedBox(
                       width: 80,
                       height: 80,
-                      child:
-                          _videoController != null &&
+                      child: _videoController != null &&
                               _videoController!.value.isInitialized
                           ? AspectRatio(
                               aspectRatio: _videoController!.value.aspectRatio,
                               child: VideoPlayer(_videoController!),
                             )
                           : Container(color: Colors.black),
-                        ),
-                      ),
-                    // Play icon overlay
+                    ),
+                  ),
                   Positioned.fill(
                     child: Center(
                       child: Icon(
@@ -120,8 +119,6 @@ class _CustomVideoUploaderState extends State<CustomVideoUploader> {
                       ),
                     ),
                   ),
-                  
-                  // Close button - overlapping top-right corner
                   Positioned(
                     top: -10,
                     right: -10,
@@ -133,13 +130,11 @@ class _CustomVideoUploaderState extends State<CustomVideoUploader> {
                           _videoFile = null;
                         });
                       },
-                      child:Center(
+                      child: Center(
                         child: SvgPicture.asset(
                           'assets/icons/cancel_icon.svg',
-                           width: 18.w,
+                          width: 18.w,
                           height: 18.h,
-                            // ignore: deprecated_member_use
-                            //color: Colors.black87,
                         ),
                       ),
                     ),
@@ -147,6 +142,6 @@ class _CustomVideoUploaderState extends State<CustomVideoUploader> {
                 ],
               ),
             ),
-          );
-        }
-      }
+    );
+  }
+}

@@ -96,7 +96,8 @@ void showCaptureOptionsBottomSheet(BuildContext context) {
               text:'Upload from Gallery',
               svgAsset:'assets/icons/gallary_icon.svg' , 
               onTap:() {
-                context.read<MediaController>().pickMedia(); 
+                context.push('/capture_image');
+                //context.read<MediaController>().pickMedia(); 
               },
             ),
             const SizedBox(height: 10), 

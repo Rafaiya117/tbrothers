@@ -24,6 +24,9 @@ import 'package:appsoleum/features/legecy_interview_question/controller/intervie
 import 'package:appsoleum/features/legecy_profile/controller/edit_profile_image_controller.dart';
 import 'package:appsoleum/features/legecy_profile/controller/pr_controller.dart';
 import 'package:appsoleum/features/memoriers/controller/memory_controller.dart';
+import 'package:appsoleum/features/memoriers/controller/record_audio_memory.dart';
+import 'package:appsoleum/features/memoriers/controller/record_video_memory.dart';
+import 'package:appsoleum/features/memoriers/controller/recording_controller.dart';
 import 'package:appsoleum/features/onboarding_one/controller/onboarding_one_controller.dart';
 import 'package:appsoleum/features/profile/controller/edit_controller.dart';
 import 'package:appsoleum/features/profile/controller/profile_settings_controller.dart';
@@ -101,6 +104,11 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_)=> ProfileController()),
             ChangeNotifierProvider(create: (_)=> LegacyCreateCapsuleController()),
             ChangeNotifierProvider(create: (_)=> AccountViewModel()),
+            ChangeNotifierProvider(create: (_)=> AccountViewModel()),
+            ChangeNotifierProvider(create: (_)=> RecordMediaController()),
+            ChangeNotifierProvider(create: (_)=> RecordAudioMemoryController()),
+            ChangeNotifierProvider(create: (_)=> RecordVideoMemoryController()),
+                       
           ],
           child:MaterialApp.router(
             debugShowCheckedModeBanner: false,

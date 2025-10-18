@@ -1,14 +1,13 @@
 import 'dart:ui';
 
 import 'package:appsoleum/core/utils/theme.dart';
+import 'package:appsoleum/features/memoriers/widget/custom_date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class CreatePostPage extends StatelessWidget {
   const CreatePostPage({super.key});
-
-  // Color constants based on previous screens and the image
   static const Color darkBlue = Color(0xFF2B3A61);
   static const Color primaryOrange = Color(0xFFFF7B3D);
   static const Color textColor = Colors.white;
@@ -27,7 +26,7 @@ class CreatePostPage extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          'My Posts',
+          'Legacy Drop',
           style: TextStyle(
             color: textColor,
             fontWeight: FontWeight.bold,
@@ -72,8 +71,15 @@ class CreatePostPage extends StatelessWidget {
               const SizedBox(height: 8),
               _buildTextField(hintText: 'Where is the memory made?'),
               const SizedBox(height: 32),
-
-              // 5. Done Button
+              //5. Date
+              CustomDatePickerField(
+                hintText: "Select memory date",
+                onDateSelected: (date) {
+                  print("Picked: $date");
+                },
+              ),
+              const SizedBox(height: 32),
+              // 6. Done Button
               ElevatedButton(
                 onPressed: () {
                   context.push('/home_page');
@@ -106,7 +112,7 @@ class CreatePostPage extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(color: Colors.grey.shade600),
         filled: true,
-        fillColor: darkBlue, // Background is dark blue
+        fillColor: Color(0xFF1E2D4A), 
         contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -129,7 +135,7 @@ class CreatePostPage extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(color: Colors.grey.shade600),
         filled: true,
-        fillColor: darkBlue,
+        fillColor: Color(0xFF1E2D4A),
         contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -151,16 +157,79 @@ class _MediaPickerWidget extends StatelessWidget {
   static const Color darkBlue = Color(0xFF2B3A61);
   static const Color primaryOrange = Color(0xFFFF7B3D);
   static const Color textColor = Colors.white;
-  // The inner container uses a slightly darker blue/purple tone than the background
-  static const Color mediaContainerColor = Color(0xFF1E2D4A); 
-  
+  static const Color mediaContainerColor = Color(0xFF1E2D4A);
+
+  void _showMediaPickerModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFF1E2D4A), // matches your theme
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade600,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                "Choose an option",
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Upload from gallery
+              ListTile(
+                leading: const Icon(Icons.photo_library, color: primaryOrange),
+                title: const Text(
+                  "Upload from Gallery",
+                  style: TextStyle(color: textColor),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  // TODO: Handle gallery upload
+                },
+              ),
+              const Divider(color: Colors.white24),
+
+              // Record new video
+              ListTile(
+                leading: const Icon(Icons.videocam, color: primaryOrange),
+                title: const Text(
+                  "Record Video",
+                  style: TextStyle(color: textColor),
+                ),
+                onTap: () {
+                  context.push('/record_memorypost');
+                },
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      // Custom painter to draw the dashed border effect
       painter: DashedBorderPainter(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.grey.shade600, // Grey dashed border color
+        color: Colors.grey.shade600,
         strokeWidth: 1.5,
         dashWidth: 6.0,
         dashSpace: 4.0,
@@ -171,7 +240,6 @@ class _MediaPickerWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: mediaContainerColor,
           borderRadius: BorderRadius.circular(16),
-          // Subtle blue glow/shadow effect from the image
           boxShadow: [
             BoxShadow(
               color: Colors.blue.withOpacity(0.1),
@@ -182,23 +250,23 @@ class _MediaPickerWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // Inner Circle with Media Icon
+            // Icon Circle
             Container(
               padding: const EdgeInsets.all(16),
               decoration: const BoxDecoration(
-                color: darkBlue, // Darker blue background for the icon circle
+                color: darkBlue,
                 shape: BoxShape.circle,
               ),
               child: SvgPicture.asset(
-                'assets/media_icon.svg', // Placeholder for the file/media icon
-                colorFilter: const ColorFilter.mode(primaryOrange, BlendMode.srcIn),
+                'assets/media_icon.svg',
+                colorFilter:const ColorFilter.mode(primaryOrange, BlendMode.srcIn),
                 width: 32,
                 height: 32,
               ),
             ),
             const SizedBox(height: 12),
-            
-            // Add Media Text
+
+            // Texts
             const Text(
               'Add media',
               style: TextStyle(
@@ -208,8 +276,6 @@ class _MediaPickerWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-
-            // Supported Formats Text
             const Text(
               'Supported png, jpeg, mov etc',
               style: TextStyle(
@@ -219,18 +285,16 @@ class _MediaPickerWidget extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            // Add Media Button (Orange)
+            // Add Media Button
             ElevatedButton(
-              onPressed: () {
-                // Action for adding media
-              },
+              onPressed: () => _showMediaPickerModal(context), // ✅ Added modal
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryOrange,
                 foregroundColor: textColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                padding:const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
               ),
               child: const Text(
                 'Add Media',

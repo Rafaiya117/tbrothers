@@ -6,6 +6,7 @@ import 'package:appsoleum/core/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CompletedLastProfile extends StatelessWidget {
@@ -138,7 +139,7 @@ class CompletedLastProfile extends StatelessWidget {
                           backgroundColor:FontColors.button_color,
                           textColor:Colors.white,
                           onPressed: () {
-                            //context.push('/last_completed');
+                            context.push('/create_account_page');
                           },
                         ),                         
                         SizedBox(height: 20.h,)

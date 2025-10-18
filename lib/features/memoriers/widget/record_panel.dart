@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
-class RecordControlPanel extends StatelessWidget {
+class RecordMemoryControlPanel extends StatelessWidget {
   final VoidCallback onRecord;
   final VoidCallback onReset;
   final VoidCallback onDelete;
@@ -14,7 +14,7 @@ class RecordControlPanel extends StatelessWidget {
   final VoidCallback onPlay;
   final VoidCallback onPause;
 
-  const RecordControlPanel({
+  const RecordMemoryControlPanel({
     super.key,
     required this.onRecord,
     required this.onReset,
@@ -46,7 +46,7 @@ class RecordControlPanel extends StatelessWidget {
           child: Center(
             child: SvgPicture.asset(
               iconPath,
-              width: 60, // Sizing the SVG for visibility
+              width: 60, 
               height: 60,
               //colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn), // Color the icon white
             ),

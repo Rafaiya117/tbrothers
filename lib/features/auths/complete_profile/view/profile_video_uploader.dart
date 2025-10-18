@@ -22,7 +22,7 @@ class ProfileVideoUploader extends StatelessWidget {
     int _totalPages = 7;
     final controller = context.watch<ProfileVideoUploaderController>();
     return Scaffold(
-      backgroundColor:FontColors.background_color,
+      backgroundColor: FontColors.background_color,
       body: Stack(
         children: [
           // Background image
@@ -38,17 +38,16 @@ class ProfileVideoUploader extends StatelessWidget {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 40.0, sigmaY: 40.0),
               child: Container(
-                // ignore: deprecated_member_use
                 color: FontColors.background_color.withOpacity(0.5),
               ),
             ),
           ),
 
-          //arrow_back and prograssbar
+          //arrow_back and progress bar
           Positioned(
             top: 20,
             left: 0,
-            right: 0, 
+            right: 0,
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -66,7 +65,6 @@ class ProfileVideoUploader extends StatelessWidget {
                           height: 42,
                           width: 42,
                           decoration: BoxDecoration(
-                            // ignore: deprecated_member_use
                             color: Colors.white.withOpacity(0.15),
                             shape: BoxShape.circle,
                           ),
@@ -84,8 +82,8 @@ class ProfileVideoUploader extends StatelessWidget {
                         ),
                       ),
                     ),
-                   SizedBox(width: 20.w,),
-                    //Progress Indicator (centered because Row takes full width)
+                    SizedBox(width: 20.w),
+                    //Progress Indicator
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -95,12 +93,10 @@ class ProfileVideoUploader extends StatelessWidget {
                             totalPages: _totalPages,
                             barHeight: 8.0.h,
                             progressGradient: AppGradientColors.linear_button,
-                            //backgroundColor: Colors.grey[300]!,
                           ),
                         ],
                       ),
                     ),
-                    // Placeholder (keeps layout balanced since back button is on left)
                     SizedBox(width: 42),
                   ],
                 ),
@@ -112,7 +108,7 @@ class ProfileVideoUploader extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(bottom: 35,), 
+              padding: const EdgeInsets.only(bottom: 35),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -123,7 +119,7 @@ class ProfileVideoUploader extends StatelessWidget {
                           "Add Intro Video",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.playfairDisplay(
-                            fontWeight:FontWeight.w600,
+                            fontWeight: FontWeight.w600,
                             fontSize: 24.sp,
                             color: FontColors.primary_color,
                           ),
@@ -132,48 +128,47 @@ class ProfileVideoUploader extends StatelessWidget {
                         Text(
                           "Upload a short video to introduce yourself",
                           textAlign: TextAlign.center,
-                          style:GoogleFonts.inter(
+                          style: GoogleFonts.inter(
                             fontWeight: FontWeight.w400,
                             fontSize: 14.sp,
                             color: FontColors.secondary_color,
                           ),
                         ),
-                        SizedBox(height: 20.h,),
-                        CustomVideoUploader(),
-                        //CustomImagePicker(onImagePicked: controller.onImagePicked,),
-                        SizedBox(height: 20.h,),
+                        SizedBox(height: 20.h),
+                        CustomVideoUploader(onVideoPicked: controller.onVideoPicked),
+                        SizedBox(height: 20.h),
                         CustomRoundedButton(
                           text: "Continue",
                           backgroundColor: controller.selectedVideo == null
-                            ? FontColors.disabled_buttonColor
-                            : FontColors.button_color,
+                              ? FontColors.disabled_buttonColor
+                              : FontColors.button_color,
                           textColor: controller.selectedVideo == null
-                            ? FontColors.disable_text
-                            : Colors.white,
+                              ? FontColors.disable_text
+                              : Colors.white,
                           onPressed: controller.selectedVideo == null
-                            ? null
-                            : () {
-                            context.push('/last_completed');
-                          },
-                        ), 
+                              ? null
+                              : () {
+                                  context.push('/last_completed');
+                                },
+                        ),
                         SizedBox(height: 10.h),
                         TextButton(
-                          onPressed: (){
+                          onPressed: () {
                             context.push('/last_completed');
-                          }, 
+                          },
                           child: Text(
                             "Skip for Now",
                             style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp,
-                            color: FontColors.button_color,
-                            decoration: TextDecoration.underline,
-                            decorationColor: FontColors.button_color,
-                            decorationThickness: 1.2,
-                          ),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.sp,
+                              color: FontColors.button_color,
+                              decoration: TextDecoration.underline,
+                              decorationColor: FontColors.button_color,
+                              decorationThickness: 1.2,
+                            ),
                           ),
                         ),
-                        SizedBox(height: 20.h,)
+                        SizedBox(height: 20.h),
                       ],
                     ),
                   ),

@@ -83,7 +83,7 @@ const HomePageView({super.key});
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "My Posts",
+                      "Legacy Drop",
                       style:GoogleFonts.inter(
                         fontWeight: FontWeight.w500,
                         fontSize: 16.sp,
@@ -163,18 +163,10 @@ const HomePageView({super.key});
                   children: [
                     CustomActionButton(
                       icon: SvgPicture.asset('assets/icons/micro_phone.svg'),
-                      label: 'Record Message', 
+                      label: 'Appso Message', 
                       onTap: () {
                         showCaptureOptionsBottomSheet(context);
                         //context.push('/record_audio');
-                      },
-                    ),
-                    SizedBox(width:5.w),
-                    CustomActionButton(
-                      icon: SvgPicture.asset('assets/icons/upload_image.svg'),
-                      label: 'Upload Image', 
-                      onTap: () {
-                        context.push('/capture_image');
                       },
                     ),
                     SizedBox(width:5.w),
@@ -183,6 +175,14 @@ const HomePageView({super.key});
                       label: 'Create Capsule', 
                       onTap: () {
                         context.push('/create_capsule');
+                      },
+                    ),
+                     SizedBox(width:5.w),
+                    CustomActionButton(
+                      icon: SvgPicture.asset('assets/icons/upload_image.svg'),
+                      label: 'Explore Legacy', 
+                      onTap: () {
+                        //context.push('/capture_image');
                       },
                     ),
                   ],
